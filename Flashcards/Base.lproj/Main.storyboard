@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Flashcard Front View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Flashcards" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="FlashcardFrontViewController" customModule="Flashcards" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -56,10 +56,10 @@
             </objects>
             <point key="canvasLocation" x="-78.710644677661179" y="136.80000000000001"/>
         </scene>
-        <!--View Controller-->
+        <!--Flashcard Back View Controller-->
         <scene sceneID="qir-NM-rXM">
             <objects>
-                <viewController id="PWA-JX-sgc" sceneMemberID="viewController">
+                <viewController id="PWA-JX-sgc" customClass="FlashcardBackViewController" customModule="Flashcards" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="h5Y-T1-jHC"/>
                         <viewControllerLayoutGuide type="bottom" id="EQv-rE-Lol"/>
@@ -83,6 +83,9 @@
                             <outletCollection property="gestureRecognizers" destination="WWu-Dq-rTD" appends="YES" id="DnX-gy-vWv"/>
                         </connections>
                     </view>
+                    <connections>
+                        <outlet property="flashcardAnswerTitleView" destination="Olq-tS-AHP" id="tVJ-El-IKe"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QJU-LN-n1p" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="WWu-Dq-rTD">

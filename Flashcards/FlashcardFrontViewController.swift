@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  FlashcardFrontViewController.swift
 //  Flashcards
 //
 //  Created by Ravi Gahlla on 5/14/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITextFieldDelegate {
+class FlashcardFrontViewController: UIViewController, UITextFieldDelegate {
     // MARK: Properties
     @IBOutlet weak var fcQuestionLabel: UILabel!
     @IBOutlet weak var fcQuestionTextField: UITextField!
