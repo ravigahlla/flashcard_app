@@ -84,7 +84,7 @@
                         </connections>
                     </view>
                     <connections>
-                        <outlet property="flashcardAnswerTitleView" destination="Olq-tS-AHP" id="tVJ-El-IKe"/>
+                        <outlet property="flashcardAnswerTextView" destination="Olq-tS-AHP" id="Yxo-JE-8Lq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QJU-LN-n1p" userLabel="First Responder" sceneMemberID="firstResponder"/>

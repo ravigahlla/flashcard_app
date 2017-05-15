@@ -14,6 +14,7 @@
 		B3284D581EC95CBC0043438F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B3284D561EC95CBC0043438F /* LaunchScreen.storyboard */; };
 		B3284D631EC95CBC0043438F /* FlashcardsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3284D621EC95CBC0043438F /* FlashcardsTests.swift */; };
 		B38A2E4E1EC9858B00D1EAAB /* FlashcardBackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38A2E4D1EC9858B00D1EAAB /* FlashcardBackViewController.swift */; };
+		B38A2E501ECA138B00D1EAAB /* Flashcard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38A2E4F1ECA138B00D1EAAB /* Flashcard.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,7 @@
 		B3284D621EC95CBC0043438F /* FlashcardsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashcardsTests.swift; sourceTree = "<group>"; };
 		B3284D641EC95CBC0043438F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B38A2E4D1EC9858B00D1EAAB /* FlashcardBackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlashcardBackViewController.swift; sourceTree = "<group>"; };
+		B38A2E4F1ECA138B00D1EAAB /* Flashcard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Flashcard.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +82,7 @@
 			isa = PBXGroup;
 			children = (
 				B3284D4D1EC95CBB0043438F /* AppDelegate.swift */,
+				B38A2E4F1ECA138B00D1EAAB /* Flashcard.swift */,
 				B3284D4F1EC95CBB0043438F /* FlashcardFrontViewController.swift */,
 				B38A2E4D1EC9858B00D1EAAB /* FlashcardBackViewController.swift */,
 				B3284D511EC95CBC0043438F /* Main.storyboard */,
@@ -206,6 +209,7 @@
 			files = (
 				B3284D501EC95CBB0043438F /* FlashcardFrontViewController.swift in Sources */,
 				B38A2E4E1EC9858B00D1EAAB /* FlashcardBackViewController.swift in Sources */,
+				B38A2E501ECA138B00D1EAAB /* Flashcard.swift in Sources */,
 				B3284D4E1EC95CBB0043438F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

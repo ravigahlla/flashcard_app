@@ -11,14 +11,14 @@ import os.log
 
 class FlashcardBackViewController: UIViewController, UITextViewDelegate {
     // MARK: Properties
-    @IBOutlet weak var flashcardAnswerTitleView: UITextView!
+    @IBOutlet weak var flashcardAnswerTextView: UITextView!
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        flashcardAnswerTitleView.delegate = self
+        flashcardAnswerTextView.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
