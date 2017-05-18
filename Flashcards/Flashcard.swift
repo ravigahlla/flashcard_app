@@ -31,7 +31,7 @@ class Flashcard: NSObject, NSCoding {
         
         self.fcQuestion = fcQuestion
         self.fcAnswer = fcAnswer
-    }
+    } 
     
     //MARK: NSCoding
     func encode(with aCoder: NSCoder) {
