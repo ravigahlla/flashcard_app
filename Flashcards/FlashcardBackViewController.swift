@@ -12,7 +12,6 @@ import os.log
 class FlashcardBackViewController: UIViewController, UITextViewDelegate {
     // MARK: Properties
     @IBOutlet weak var flashcardAnswerTextView: UITextView!
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +37,10 @@ class FlashcardBackViewController: UIViewController, UITextViewDelegate {
     */
 
     func textViewDidEndEditing(_ textView: UITextView) {
+        
+    }
+    
+    @IBAction func saveFCDescriptionButton(_ sender: UIButton) {
         
     }
 }
