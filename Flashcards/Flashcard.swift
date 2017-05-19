@@ -10,7 +10,11 @@ import UIKit
 import os.log
 
 class Flashcard: NSObject, NSCoding {
+    
     // MARK: Properties
+    var defaultQ = String("(no question)")
+    var defaultA = String("(no answer)")
+    
     var fcQuestion: String
     var fcAnswer: String
     
@@ -20,18 +24,22 @@ class Flashcard: NSObject, NSCoding {
     
     //MARK: Types
     struct PropertyKey {
-        static let fcQuestion = "question"
-        static let fcAnswer = "answer"
+        static let fcQuestion = "fcQuestion"
+        static let fcAnswer = "fcAnswer"
+    }
+    
+    // MARK: Initialization
+    override init() {
+        self.fcQuestion = defaultQ!
+        self.fcAnswer = defaultA!
+        
+        super.init()
     }
     
     init?(fcQuestion: String, fcAnswer: String) {
-        guard !fcQuestion.isEmpty || !fcAnswer.isEmpty else {
-            return nil
-        }
-        
         self.fcQuestion = fcQuestion
         self.fcAnswer = fcAnswer
-    } 
+    }
     
     //MARK: NSCoding
     func encode(with aCoder: NSCoder) {
