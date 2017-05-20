@@ -71,6 +71,6 @@ class FlashcardFrontViewController: UIViewController, UITextFieldDelegate {
     private func loadFlashcard() -> Flashcard? {
         return NSKeyedUnarchiver.unarchiveObject(withFile: Flashcard.ArchiveURL.path) as? Flashcard
     }
-
+    
 }
 

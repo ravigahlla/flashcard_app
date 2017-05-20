@@ -1,14 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Cfj-Ll-jJZ">
     <device id="retina4_7" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Flashcard View Controller-->
+        <scene sceneID="NE7-w8-8rM">
+            <objects>
+                <viewController id="Cfj-Ll-jJZ" customClass="FlashcardViewController" customModule="Flashcards" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="BfD-v0-U5S"/>
+                        <viewControllerLayoutGuide type="bottom" id="Yft-wC-Vq5"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="CZ7-6L-piN">
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kjr-qp-BRN">
+                                <rect key="frame" x="35" y="59" width="600" height="250"/>
+                                <connections>
+                                    <segue destination="PWA-JX-sgc" kind="embed" id="AJm-zV-JNn"/>
+                                </connections>
+                            </containerView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cz5-J2-bMF">
+                                <rect key="frame" x="590" y="325" width="57" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Add"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wiU-Xt-Zqx">
+                                <rect key="frame" x="20" y="325" width="68" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Remove"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Name of Deck" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q2U-ss-qtI">
+                                <rect key="frame" x="275" y="9" width="121" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Slide 1 of ?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ncT-mP-8c9">
+                                <rect key="frame" x="287" y="324" width="97" height="31"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6UI-aT-T5K">
+                                <rect key="frame" x="35" y="59" width="600" height="250"/>
+                                <connections>
+                                    <segue destination="BYZ-38-t0r" kind="embed" id="chQ-oI-KLp"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="Kjr-qp-BRN" secondAttribute="trailing" constant="12" id="2lI-H2-YEJ"/>
+                            <constraint firstItem="6UI-aT-T5K" firstAttribute="leading" secondItem="Kjr-qp-BRN" secondAttribute="leading" id="6rV-HK-q19"/>
+                            <constraint firstItem="ncT-mP-8c9" firstAttribute="top" secondItem="Kjr-qp-BRN" secondAttribute="bottom" constant="15" id="CmD-l9-XD3"/>
+                            <constraint firstItem="Kjr-qp-BRN" firstAttribute="centerX" secondItem="ncT-mP-8c9" secondAttribute="centerX" id="GmU-PU-P0Y"/>
+                            <constraint firstItem="Kjr-qp-BRN" firstAttribute="top" secondItem="Q2U-ss-qtI" secondAttribute="bottom" constant="20" id="MNy-Ir-k1Y"/>
+                            <constraint firstItem="Kjr-qp-BRN" firstAttribute="leading" secondItem="CZ7-6L-piN" secondAttribute="leadingMargin" constant="15" id="UNS-cU-BPs"/>
+                            <constraint firstItem="6UI-aT-T5K" firstAttribute="bottom" secondItem="Kjr-qp-BRN" secondAttribute="bottom" id="VDl-3R-YFG"/>
+                            <constraint firstItem="6UI-aT-T5K" firstAttribute="trailing" secondItem="Kjr-qp-BRN" secondAttribute="trailing" id="axF-NL-fCO"/>
+                            <constraint firstAttribute="bottom" secondItem="Kjr-qp-BRN" secondAttribute="bottom" constant="66" id="cnH-1b-DGE"/>
+                            <constraint firstItem="Kjr-qp-BRN" firstAttribute="top" secondItem="CZ7-6L-piN" secondAttribute="top" constant="59" id="fa9-og-H2N"/>
+                            <constraint firstItem="6UI-aT-T5K" firstAttribute="top" secondItem="Kjr-qp-BRN" secondAttribute="top" id="pi0-JX-Rzr"/>
+                            <constraint firstItem="Kjr-qp-BRN" firstAttribute="centerX" secondItem="Q2U-ss-qtI" secondAttribute="centerX" id="rUa-CH-h2Q"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="flashcardBackContainerView" destination="6UI-aT-T5K" id="cnL-iw-seJ"/>
+                        <outlet property="flashcardFrontContainerView" destination="Kjr-qp-BRN" id="21a-gx-jOE"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VYk-Ph-33T" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-78.710644677661179" y="-994.39999999999998"/>
+        </scene>
         <!--Flashcard Front View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -18,29 +91,26 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="250"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter title here..." textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dLu-6L-MFt">
-                                <rect key="frame" x="80" y="157" width="506" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
-                            </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="smu-Y5-4em">
-                                <rect key="frame" x="80" y="70" width="506" height="38"/>
+                                <rect key="frame" x="47" y="64" width="506" height="38"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter title here..." textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dLu-6L-MFt">
+                                <rect key="frame" x="47" y="143" width="506" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="2zM-xt-Rd4" appends="YES" id="Dbm-2z-sGm"/>
-                        </connections>
                     </view>
                     <connections>
                         <outlet property="fcQuestionLabel" destination="smu-Y5-4em" id="fWx-MV-cnF"/>
@@ -48,13 +118,8 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="2zM-xt-Rd4">
-                    <connections>
-                        <segue destination="PWA-JX-sgc" kind="show" id="YO2-Da-lcp"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-78.710644677661179" y="136.80000000000001"/>
+            <point key="canvasLocation" x="-341" y="-144"/>
         </scene>
         <!--Flashcard Back View Controller-->
         <scene sceneID="qir-NM-rXM">
@@ -65,11 +130,11 @@
                         <viewControllerLayoutGuide type="bottom" id="EQv-rE-Lol"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="umx-qV-CkH">
-                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="250"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Olq-tS-AHP">
-                                <rect key="frame" x="101" y="70" width="464" height="190"/>
+                                <rect key="frame" x="68" y="33" width="464" height="153"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
@@ -77,7 +142,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pcc-e6-c1z">
-                                <rect key="frame" x="565" y="303" width="68" height="36"/>
+                                <rect key="frame" x="495" y="194" width="68" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Save"/>
                                 <connections>
@@ -87,22 +152,14 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="WWu-Dq-rTD" appends="YES" id="DnX-gy-vWv"/>
-                        </connections>
                     </view>
                     <connections>
                         <outlet property="flashcardAnswerTextView" destination="Olq-tS-AHP" id="Yxo-JE-8Lq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QJU-LN-n1p" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="WWu-Dq-rTD">
-                    <connections>
-                        <segue destination="BYZ-38-t0r" kind="show" id="3Po-Mw-zm9"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="644.52773613193403" y="136.80000000000001"/>
+            <point key="canvasLocation" x="200" y="-144"/>
         </scene>
     </scenes>
 </document>
