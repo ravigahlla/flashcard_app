@@ -31,20 +31,25 @@ class FlashcardViewController: UIViewController {
         
         // flip the view on whatever is being displayed
         if flashcardFrontContainerView.alpha == 1 {
-            UIView.transition(from: flashcardFrontContainerView, to: flashcardBackContainerView, duration: 1, options: UIViewAnimationOptions.transitionFlipFromRight, completion: nil)
+            /*
+            UIView.transition(from: self.flashcardFrontContainerView, to: self.flashcardBackContainerView, duration: 1, options: UIViewAnimationOptions.transitionFlipFromRight, completion: nil)
             
             flashcardFrontContainerView.alpha = 0
             flashcardBackContainerView.alpha = 1
-
+            */
             /*
             UIView.animate(withDuration: 0.5, animations: {
                 self.flashcardFrontContainerView.alpha = 0
                 self.flashcardBackContainerView.alpha = 1
             })*/
+            flashcardFrontContainerView.alpha = 0
+            flashcardBackContainerView.alpha = 1
+
             os_log("flipped front to back", log: OSLog.default, type: .debug)
         } else {
-            UIView.transition(from: flashcardBackContainerView, to: flashcardFrontContainerView, duration: 1, options: UIViewAnimationOptions.transitionFlipFromRight, completion: nil)
-            
+            /*
+            UIView.transition(from: self.flashcardBackContainerView, to: self.flashcardFrontContainerView, duration: 1, options: UIViewAnimationOptions.transitionFlipFromRight, completion: nil)
+            */
             flashcardFrontContainerView.alpha = 1
             flashcardBackContainerView.alpha = 0
             /*
