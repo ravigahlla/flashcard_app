@@ -15,7 +15,9 @@
 		B3284D631EC95CBC0043438F /* FlashcardsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3284D621EC95CBC0043438F /* FlashcardsTests.swift */; };
 		B38A2E4E1EC9858B00D1EAAB /* FlashcardBackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38A2E4D1EC9858B00D1EAAB /* FlashcardBackViewController.swift */; };
 		B38A2E501ECA138B00D1EAAB /* Flashcard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38A2E4F1ECA138B00D1EAAB /* Flashcard.swift */; };
-		B3A39B301ED0ABC5004179E1 /* FlashcardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A39B2F1ED0ABC5004179E1 /* FlashcardViewController.swift */; };
+		B3A39B301ED0ABC5004179E1 /* FlashcardDeckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A39B2F1ED0ABC5004179E1 /* FlashcardDeckViewController.swift */; };
+		B3A39B321ED3C494004179E1 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = B3A39B311ED3C494004179E1 /* README.md */; };
+		B3A39B341ED3CAC3004179E1 /* FlashcardDeck.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A39B331ED3CAC3004179E1 /* FlashcardDeck.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,7 +43,9 @@
 		B3284D641EC95CBC0043438F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B38A2E4D1EC9858B00D1EAAB /* FlashcardBackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlashcardBackViewController.swift; sourceTree = "<group>"; };
 		B38A2E4F1ECA138B00D1EAAB /* Flashcard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Flashcard.swift; sourceTree = "<group>"; };
-		B3A39B2F1ED0ABC5004179E1 /* FlashcardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FlashcardViewController.swift; path = ../FlashcardViewController.swift; sourceTree = "<group>"; };
+		B3A39B2F1ED0ABC5004179E1 /* FlashcardDeckViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FlashcardDeckViewController.swift; path = ../FlashcardDeckViewController.swift; sourceTree = "<group>"; };
+		B3A39B311ED3C494004179E1 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
+		B3A39B331ED3CAC3004179E1 /* FlashcardDeck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlashcardDeck.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,13 +89,15 @@
 			children = (
 				B3284D4D1EC95CBB0043438F /* AppDelegate.swift */,
 				B38A2E4F1ECA138B00D1EAAB /* Flashcard.swift */,
-				B3A39B2F1ED0ABC5004179E1 /* FlashcardViewController.swift */,
+				B3A39B331ED3CAC3004179E1 /* FlashcardDeck.swift */,
+				B3A39B2F1ED0ABC5004179E1 /* FlashcardDeckViewController.swift */,
 				B3284D4F1EC95CBB0043438F /* FlashcardFrontViewController.swift */,
 				B38A2E4D1EC9858B00D1EAAB /* FlashcardBackViewController.swift */,
 				B3284D511EC95CBC0043438F /* Main.storyboard */,
 				B3284D541EC95CBC0043438F /* Assets.xcassets */,
 				B3284D561EC95CBC0043438F /* LaunchScreen.storyboard */,
 				B3284D591EC95CBC0043438F /* Info.plist */,
+				B3A39B311ED3C494004179E1 /* README.md */,
 			);
 			path = Flashcards;
 			sourceTree = "<group>";
@@ -210,9 +216,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3A39B321ED3C494004179E1 /* README.md in Sources */,
+				B3A39B341ED3CAC3004179E1 /* FlashcardDeck.swift in Sources */,
 				B3284D501EC95CBB0043438F /* FlashcardFrontViewController.swift in Sources */,
 				B38A2E4E1EC9858B00D1EAAB /* FlashcardBackViewController.swift in Sources */,
-				B3A39B301ED0ABC5004179E1 /* FlashcardViewController.swift in Sources */,
+				B3A39B301ED0ABC5004179E1 /* FlashcardDeckViewController.swift in Sources */,
 				B38A2E501ECA138B00D1EAAB /* Flashcard.swift in Sources */,
 				B3284D4E1EC95CBB0043438F /* AppDelegate.swift in Sources */,
 			);

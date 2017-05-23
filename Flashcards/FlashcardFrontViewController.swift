@@ -14,22 +14,25 @@ class FlashcardFrontViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var fcQuestionLabel: UILabel!
     @IBOutlet weak var fcQuestionTextField: UITextField!
     
-    var flashcard = Flashcard()
+    /*
+     This value is either passed by `FlashcardDeckViewController` in `prepare(for:sender:)`, or constructed as part of adding a new flashcard.
+     */
+    var flashcard: Flashcard?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // load any meals
-        if let savedFlashcard = loadFlashcard() {
-            flashcard = savedFlashcard
-            os_log("after loaded flashcard", log: OSLog.default, type: .debug)
+        // Handle the text field’s user input through delegate callbacks.
+        fcQuestionTextField.delegate = self
+        
+        // setup views if editing an existing Flashcard
+        if let flashcard = flashcard {
             fcQuestionLabel.text = flashcard.fcQuestion
+            os_log("loaded sent flashcard to front", log: OSLog.default, type: .debug)
         } else {
             flashcard = Flashcard()
-            fcQuestionLabel.text = flashcard.defaultQ
+            fcQuestionLabel.text = flashcard?.defaultQ
         }
-        
-        fcQuestionTextField.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -51,15 +54,15 @@ class FlashcardFrontViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: UITextFieldDelegate
     func textFieldDidEndEditing(_ textField: UITextField) {
-        flashcard.fcQuestion = textField.text!
-        fcQuestionLabel.text = flashcard.fcQuestion
+        flashcard?.fcQuestion = textField.text!
+        fcQuestionLabel.text = flashcard?.fcQuestion
         
-        saveFlashcard()
+        //saveFlashcard()
     }
-    
+/*
     // MARK: Private methods
     private func saveFlashcard() {
-        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(flashcard, toFile: Flashcard.ArchiveURL.path)
+        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(flashcard?, toFile: Flashcard.ArchiveURL.path)
 
         if isSuccessfulSave {
             os_log("Flashcard successfully saved.", log: OSLog.default, type: .debug)
@@ -71,6 +74,6 @@ class FlashcardFrontViewController: UIViewController, UITextFieldDelegate {
     private func loadFlashcard() -> Flashcard? {
         return NSKeyedUnarchiver.unarchiveObject(withFile: Flashcard.ArchiveURL.path) as? Flashcard
     }
-    
+*/
 }
 

@@ -1,7 +1,13 @@
 # flashcard_app
 iOS 10.3 Mobile-App to represent flashcards
 
-
+to-do:
+- fix initializer for flashcard to handle empty parameters
+- need to fix my initializer logic for flashcard and flashcards
+- fix alignment/auto-layout issues for flashcard front/back/full controller view
+- handle animation
+- write unit tests for flashcard and flashcards
+- fix-up icon errors
 
 helpful links:
 - https://developer.apple.com/library/content/referencelibrary/GettingStarted/DevelopiOSAppsSwift/index.html#//apple_ref/doc/uid/TP40015214-CH2-SW1

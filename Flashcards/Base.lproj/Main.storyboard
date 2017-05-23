@@ -10,10 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Flashcard View Controller-->
+        <!--Flashcard Deck View Controller-->
         <scene sceneID="NE7-w8-8rM">
             <objects>
-                <viewController id="Cfj-Ll-jJZ" customClass="FlashcardViewController" customModule="Flashcards" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Cfj-Ll-jJZ" customClass="FlashcardDeckViewController" customModule="Flashcards" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="BfD-v0-U5S"/>
                         <viewControllerLayoutGuide type="bottom" id="Yft-wC-Vq5"/>
@@ -25,7 +25,7 @@
                             <containerView opaque="NO" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kjr-qp-BRN">
                                 <rect key="frame" x="35" y="59" width="600" height="250"/>
                                 <connections>
-                                    <segue destination="PWA-JX-sgc" kind="embed" id="AJm-zV-JNn"/>
+                                    <segue destination="PWA-JX-sgc" kind="embed" identifier="flashcardBackSegue" id="AJm-zV-JNn"/>
                                 </connections>
                             </containerView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cz5-J2-bMF">
@@ -53,7 +53,7 @@
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6UI-aT-T5K">
                                 <rect key="frame" x="35" y="59" width="600" height="250"/>
                                 <connections>
-                                    <segue destination="BYZ-38-t0r" kind="embed" id="chQ-oI-KLp"/>
+                                    <segue destination="BYZ-38-t0r" kind="embed" identifier="flashcardFrontSegue" id="chQ-oI-KLp"/>
                                 </connections>
                             </containerView>
                         </subviews>

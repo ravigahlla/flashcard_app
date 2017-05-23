@@ -1,6 +1,6 @@
 //
 //  Flashcard.swift
-//  Flashcards
+//  Represent a flashcard
 //
 //  Created by Ravi Gahlla on 5/15/17.
 //  Copyright © 2017 Ravi Gahlla. All rights reserved.

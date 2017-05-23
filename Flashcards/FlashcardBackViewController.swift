@@ -12,12 +12,23 @@ import os.log
 class FlashcardBackViewController: UIViewController, UITextViewDelegate {
     // MARK: Properties
     @IBOutlet weak var flashcardAnswerTextView: UITextView!
+    
+    var flashcard: Flashcard?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        // Handle the text field’s user input through delegate callbacks.
         flashcardAnswerTextView.delegate = self
+        
+        // setup views if editing an existing Flashcard
+        if let flashcard = flashcard {
+            flashcardAnswerTextView.text = flashcard.fcAnswer
+            os_log("loaded sent flashcard to back", log: OSLog.default, type: .debug)
+        } else {
+            flashcard = Flashcard()
+            flashcardAnswerTextView.text = flashcard?.defaultA
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -37,10 +48,6 @@ class FlashcardBackViewController: UIViewController, UITextViewDelegate {
     */
 
     func textViewDidEndEditing(_ textView: UITextView) {
-        
-    }
-    
-    @IBAction func saveFCDescriptionButton(_ sender: UIButton) {
         
     }
 }
