@@ -27,9 +27,19 @@ class FlashcardDeckViewController: UIViewController {
         let frontFCTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         flashcardFrontContainerView.addGestureRecognizer(frontFCTapGesture)
         
+        // add swipe gesture to the front uiview, to recognize when to go to the next card
+        let frontFCSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleFrontFCRightSwipe))
+        frontFCSwipeGesture.direction = UISwipeGestureRecognizerDirection.right
+        flashcardFrontContainerView.addGestureRecognizer(frontFCSwipeGesture)
+        
         // add tap gesture to the back uiview, to recognize when to flip to back
         let backFCTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         flashcardBackContainerView.addGestureRecognizer(backFCTapGesture)
+        
+        // add swipe gesture to the back uiview, to recognize when to go to the next card
+        let backFCSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleBackFCRightSwipe))
+        backFCSwipeGesture.direction = UISwipeGestureRecognizerDirection.right
+        flashcardBackContainerView.addGestureRecognizer(backFCSwipeGesture)
     }
     
     private func loadSampleFlashcards() {
@@ -51,7 +61,7 @@ class FlashcardDeckViewController: UIViewController {
         os_log("tapped on", log: OSLog.default, type: .debug)
         
         // flip the view on whatever is being displayed
-        if flashcardFrontContainerView.alpha == 1 {
+        if flashcardFrontContainerView.alpha == 0 {
             /*
             UIView.transition(from: self.flashcardFrontContainerView, to: self.flashcardBackContainerView, duration: 1, options: UIViewAnimationOptions.transitionFlipFromRight, completion: nil)
             
@@ -63,16 +73,20 @@ class FlashcardDeckViewController: UIViewController {
                 self.flashcardFrontContainerView.alpha = 0
                 self.flashcardBackContainerView.alpha = 1
             })*/
-            flashcardFrontContainerView.alpha = 0
-            flashcardBackContainerView.alpha = 1
+            
+            // flip the cards
+            flashcardFrontContainerView.alpha = 1
+            flashcardBackContainerView.alpha = 0
 
             os_log("flipped front to back", log: OSLog.default, type: .debug)
         } else {
             /*
             UIView.transition(from: self.flashcardBackContainerView, to: self.flashcardFrontContainerView, duration: 1, options: UIViewAnimationOptions.transitionFlipFromRight, completion: nil)
             */
-            flashcardFrontContainerView.alpha = 1
-            flashcardBackContainerView.alpha = 0
+            
+            // flip the cards
+            flashcardFrontContainerView.alpha = 0
+            flashcardBackContainerView.alpha = 1
             /*
             UIView.animate(withDuration: 0.5, animations: {
                 self.flashcardFrontContainerView.alpha = 1
@@ -80,6 +94,14 @@ class FlashcardDeckViewController: UIViewController {
             })*/
             os_log("flipped back to front", log: OSLog.default, type: .debug)
         }
+    }
+    
+    func handleFrontFCRightSwipe() {
+        os_log("swiped right on front", log: OSLog.default, type: .debug)
+    }
+    
+    func handleBackFCRightSwipe() {
+        os_log("swiped right on back", log: OSLog.default, type: .debug)
     }
 
     override func didReceiveMemoryWarning() {
