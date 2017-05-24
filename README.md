@@ -9,7 +9,8 @@ to-do:
 - write unit tests for flashcard and flashcards
 - fix-up icon errors
 
-helpful links:
+helpful links/references/inspiration:
 - https://developer.apple.com/library/content/referencelibrary/GettingStarted/DevelopiOSAppsSwift/index.html#//apple_ref/doc/uid/TP40015214-CH2-SW1
 - https://spin.atomicobject.com/2015/09/02/switch-container-views/
 - https://stackoverflow.com/questions/4660371/how-to-add-a-touch-event-to-a-uiview
+- https://stackoverflow.com/questions/32437094/pass-data-to-the-container-view-in-swift

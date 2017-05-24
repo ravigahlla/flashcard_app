@@ -93,7 +93,9 @@ class FlashcardDeckViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         os_log("in prepare", log: OSLog.default, type: .debug)
         
-        loadSampleFlashcards() // load sample flashcards in prepare because it is loaded before viewDidLoad()
+        if fcDeck === nil { // don't load unnecessarily
+            loadSampleFlashcards() // load sample flashcards in prepare because it is loaded before viewDidLoad(), causing a nil problem when trying to pass flashcard data to container views
+        }
         
         super.prepare(for: segue, sender: sender)
         
@@ -119,35 +121,5 @@ class FlashcardDeckViewController: UIViewController {
             default:
                 fatalError("Unexpected Segue Identifier; \(segue.identifier)")
         }
-        
-        /*
-        switch(segue.identifier ?? "") {
-            case "flashcardFrontSegue":
-                os_log("sending data to front flashcard", log: OSLog.default, type: .debug)
-                
-                guard let fcFrontViewController = segue.destination as? FlashcardFrontViewController else {
-                    fatalError("Unexpected destination: \(segue.destination)")
-                }
-                // pass current flashcard to the front controller
-                //fcFrontViewController.flashcard = Flashcard(fcQuestion: "Ravi", fcAnswer: "Singh")
-                print("in prepare...")
-                print(fcDeck?.deck[0].fcQuestion)
-                for fc in (fcDeck?.deck)! {
-                    print(fc.fcQuestion)
-                    print(fc.fcAnswer)
-                }
-                
-                fcFrontViewController.flashcard = Flashcard(fcQuestion: "Test", fcAnswer: "Test2")
-                //fcFrontViewController.flashcard = (fcDeck?.getFlashcardAt(position: (fcDeck?.currentPosition)!))!
-            
-            case "flashcardBackSegue":
-                guard let fcBackViewController = segue.destination as? FlashcardBackViewController else {
-                    fatalError("Unexpected destination: \(segue.destination)")
-                }
-                fcBackViewController.flashcard = Flashcard(fcQuestion: "Ravi", fcAnswer: "Singh")
-            
-            default:
-                fatalError("Unexpected Segue Identifier; \(segue.identifier)")
-        }*/
     }
 }
