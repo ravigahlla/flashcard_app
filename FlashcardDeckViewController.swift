@@ -14,13 +14,14 @@ class FlashcardDeckViewController: UIViewController {
     @IBOutlet weak var flashcardFrontContainerView: UIView!
     @IBOutlet weak var flashcardBackContainerView: UIView!
 
-    var fcDeck: FlashcardDeck? // optional - either you load a deck, or you have to create one
+    var fcDeck: FlashcardDeck?
     
     override func viewDidLoad() {
+        os_log("viewDidLoad", log: OSLog.default, type: .debug)
         super.viewDidLoad()
         
         // initialize the deck with a sample for now
-        loadSampleFlashcards()
+        //loadSampleFlashcards()
 
         // add tap gesture to the front uiview, to recognize when to flip to back
         let frontFCTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
@@ -31,7 +32,7 @@ class FlashcardDeckViewController: UIViewController {
         flashcardBackContainerView.addGestureRecognizer(backFCTapGesture)
     }
     
-    func loadSampleFlashcards() {
+    private func loadSampleFlashcards() {
         
         guard let fc1 = Flashcard(fcQuestion: "What is 2+2?", fcAnswer: "4") else {
             fatalError("Unable to instantiate fc1")
@@ -41,11 +42,8 @@ class FlashcardDeckViewController: UIViewController {
             fatalError("Unable to instantiate fc2")
         }
         
-        var sampleDeck = [Flashcard]()
+        fcDeck = FlashcardDeck(name: "Sample Deck", currentPosition: 0, deck: [fc1, fc2])
         
-        sampleDeck += [fc1, fc2]
-        
-        fcDeck = FlashcardDeck(name: "Sample Deck", currentPosition: 0, deck: sampleDeck)
         os_log("loaded sample flashcards", log: OSLog.default, type: .debug)
     }
     
@@ -93,18 +91,53 @@ class FlashcardDeckViewController: UIViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        os_log("in prepare", log: OSLog.default, type: .debug)
+        
+        loadSampleFlashcards() // load sample flashcards in prepare because it is loaded before viewDidLoad()
         
         super.prepare(for: segue, sender: sender)
         
+        switch (segue.identifier ?? "") {
+            
+            case "flashcardFrontSegue":
+                os_log("entered flashcard front segue", log: OSLog.default, type: .debug)
+            
+                guard let fcFrontViewController = segue.destination as? FlashcardFrontViewController else {
+                    fatalError("Unexpected destination: \(segue.destination)")
+                }
+                // pass current flashcard to the front controller
+                fcFrontViewController.flashcard = fcDeck?.deck[(fcDeck?.currentPosition)!]
+            
+            case "flashcardBackSegue":
+                os_log("entered flashcard back segue", log: OSLog.default, type: .debug)
+                guard let fcBackViewController = segue.destination as? FlashcardBackViewController else {
+                    fatalError("Unexpected destination: \(segue.destination)")
+                }
+                // pass current flashcard to the front controller
+                fcBackViewController.flashcard = fcDeck?.deck[(fcDeck?.currentPosition)!]
+        
+            default:
+                fatalError("Unexpected Segue Identifier; \(segue.identifier)")
+        }
+        
+        /*
         switch(segue.identifier ?? "") {
             case "flashcardFrontSegue":
+                os_log("sending data to front flashcard", log: OSLog.default, type: .debug)
+                
                 guard let fcFrontViewController = segue.destination as? FlashcardFrontViewController else {
                     fatalError("Unexpected destination: \(segue.destination)")
                 }
                 // pass current flashcard to the front controller
                 //fcFrontViewController.flashcard = Flashcard(fcQuestion: "Ravi", fcAnswer: "Singh")
+                print("in prepare...")
                 print(fcDeck?.deck[0].fcQuestion)
-                fcFrontViewController.flashcard = fcDeck?.deck[0]
+                for fc in (fcDeck?.deck)! {
+                    print(fc.fcQuestion)
+                    print(fc.fcAnswer)
+                }
+                
+                fcFrontViewController.flashcard = Flashcard(fcQuestion: "Test", fcAnswer: "Test2")
                 //fcFrontViewController.flashcard = (fcDeck?.getFlashcardAt(position: (fcDeck?.currentPosition)!))!
             
             case "flashcardBackSegue":
@@ -115,6 +148,6 @@ class FlashcardDeckViewController: UIViewController {
             
             default:
                 fatalError("Unexpected Segue Identifier; \(segue.identifier)")
-        }
+        }*/
     }
 }
