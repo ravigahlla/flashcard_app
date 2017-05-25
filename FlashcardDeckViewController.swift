@@ -17,29 +17,34 @@ class FlashcardDeckViewController: UIViewController {
     var fcDeck: FlashcardDeck?
     
     override func viewDidLoad() {
-        os_log("viewDidLoad", log: OSLog.default, type: .debug)
-        super.viewDidLoad()
+        os_log("in viewDidLoad", log: OSLog.default, type: .debug)
         
-        // initialize the deck with a sample for now
-        //loadSampleFlashcards()
+        super.viewDidLoad()
 
         // add tap gesture to the front uiview, to recognize when to flip to back
         let frontFCTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        
         flashcardFrontContainerView.addGestureRecognizer(frontFCTapGesture)
+        
+        // add tap gesture to the back uiview, to recognize when to flip to back
+        let backFCTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        
+        flashcardBackContainerView.addGestureRecognizer(backFCTapGesture)
         
         // add swipe gesture to the front uiview, to recognize when to go to the next card
         let frontFCSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleFrontFCRightSwipe))
         frontFCSwipeGesture.direction = UISwipeGestureRecognizerDirection.right
-        flashcardFrontContainerView.addGestureRecognizer(frontFCSwipeGesture)
         
-        // add tap gesture to the back uiview, to recognize when to flip to back
-        let backFCTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-        flashcardBackContainerView.addGestureRecognizer(backFCTapGesture)
+        flashcardFrontContainerView.addGestureRecognizer(frontFCSwipeGesture)
         
         // add swipe gesture to the back uiview, to recognize when to go to the next card
         let backFCSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleBackFCRightSwipe))
         backFCSwipeGesture.direction = UISwipeGestureRecognizerDirection.right
+        
         flashcardBackContainerView.addGestureRecognizer(backFCSwipeGesture)
+        
+        flashcardFrontContainerView.alpha = 1
+        flashcardBackContainerView.alpha = 0
     }
     
     private func loadSampleFlashcards() {
@@ -58,15 +63,12 @@ class FlashcardDeckViewController: UIViewController {
     }
     
     func handleTap() {
-        os_log("tapped on", log: OSLog.default, type: .debug)
         
         // flip the view on whatever is being displayed
         if flashcardFrontContainerView.alpha == 0 {
+            os_log("tapped on back", log: OSLog.default, type: .debug)
             /*
             UIView.transition(from: self.flashcardFrontContainerView, to: self.flashcardBackContainerView, duration: 1, options: UIViewAnimationOptions.transitionFlipFromRight, completion: nil)
-            
-            flashcardFrontContainerView.alpha = 0
-            flashcardBackContainerView.alpha = 1
             */
             /*
             UIView.animate(withDuration: 0.5, animations: {
@@ -77,22 +79,24 @@ class FlashcardDeckViewController: UIViewController {
             // flip the cards
             flashcardFrontContainerView.alpha = 1
             flashcardBackContainerView.alpha = 0
-
-            os_log("flipped front to back", log: OSLog.default, type: .debug)
+            os_log("flipped back to front", log: OSLog.default, type: .debug)
+            
         } else {
+            os_log("tapped on front", log: OSLog.default, type: .debug)
             /*
             UIView.transition(from: self.flashcardBackContainerView, to: self.flashcardFrontContainerView, duration: 1, options: UIViewAnimationOptions.transitionFlipFromRight, completion: nil)
             */
             
             // flip the cards
-            flashcardFrontContainerView.alpha = 0
-            flashcardBackContainerView.alpha = 1
+            
             /*
             UIView.animate(withDuration: 0.5, animations: {
                 self.flashcardFrontContainerView.alpha = 1
                 self.flashcardBackContainerView.alpha = 0
             })*/
-            os_log("flipped back to front", log: OSLog.default, type: .debug)
+            flashcardFrontContainerView.alpha = 0
+            flashcardBackContainerView.alpha = 1
+            os_log("flipped front to back", log: OSLog.default, type: .debug)
         }
     }
     
@@ -131,6 +135,7 @@ class FlashcardDeckViewController: UIViewController {
                 }
                 // pass current flashcard to the front controller
                 fcFrontViewController.flashcard = fcDeck?.deck[(fcDeck?.currentPosition)!]
+                //self.addChildViewController(fcFrontViewController);
             
             case "flashcardBackSegue":
                 os_log("entered flashcard back segue", log: OSLog.default, type: .debug)
@@ -139,6 +144,7 @@ class FlashcardDeckViewController: UIViewController {
                 }
                 // pass current flashcard to the front controller
                 fcBackViewController.flashcard = fcDeck?.deck[(fcDeck?.currentPosition)!]
+                //self.addChildViewController(fcBackViewController)
         
             default:
                 fatalError("Unexpected Segue Identifier; \(segue.identifier)")

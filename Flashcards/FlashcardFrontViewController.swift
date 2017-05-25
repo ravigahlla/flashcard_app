@@ -30,7 +30,6 @@ class FlashcardFrontViewController: UIViewController, UITextFieldDelegate {
             fcQuestionLabel.text = flashcard.fcQuestion
             os_log("loading front flashcard with sent data", log: OSLog.default, type: .debug)
             print("flashcard.fcQuestion = \(flashcard.fcQuestion)")
-            print("flashcard.fcAnswer = \(flashcard.fcAnswer)")
         } else {
             flashcard = Flashcard()
             fcQuestionLabel.text = flashcard?.defaultQ
