@@ -32,16 +32,20 @@ class FlashcardDeckViewController: UIViewController {
         flashcardBackContainerView.addGestureRecognizer(backFCTapGesture)
         
         // add swipe gesture to the front uiview, to recognize when to go to the next card
-        let frontFCSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleFrontFCRightSwipe))
-        frontFCSwipeGesture.direction = UISwipeGestureRecognizerDirection.right
-        
-        flashcardFrontContainerView.addGestureRecognizer(frontFCSwipeGesture)
+        let frontFCSwipeRightGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleFrontFCRightSwipe))
+        let frontFCSwipeLeftGesture = UISwipeGestureRecognizer(target: self, action: #selector (handleFrontFCLeftSwipe))
+        frontFCSwipeRightGesture.direction = UISwipeGestureRecognizerDirection.right
+        frontFCSwipeLeftGesture.direction = UISwipeGestureRecognizerDirection.left
+        flashcardFrontContainerView.addGestureRecognizer(frontFCSwipeRightGesture)
+        flashcardFrontContainerView.addGestureRecognizer(frontFCSwipeLeftGesture)
         
         // add swipe gesture to the back uiview, to recognize when to go to the next card
-        let backFCSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleBackFCRightSwipe))
-        backFCSwipeGesture.direction = UISwipeGestureRecognizerDirection.right
-        
-        flashcardBackContainerView.addGestureRecognizer(backFCSwipeGesture)
+        let backFCSwipeRightGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleBackFCRightSwipe))
+        let backFCSwipeLeftGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleBackFCLeftSwipe))
+        backFCSwipeRightGesture.direction = UISwipeGestureRecognizerDirection.right
+        backFCSwipeLeftGesture.direction = UISwipeGestureRecognizerDirection.left
+        flashcardBackContainerView.addGestureRecognizer(backFCSwipeRightGesture)
+        flashcardBackContainerView.addGestureRecognizer(backFCSwipeLeftGesture)
         
         flashcardFrontContainerView.alpha = 1
         flashcardBackContainerView.alpha = 0
@@ -104,8 +108,16 @@ class FlashcardDeckViewController: UIViewController {
         os_log("swiped right on front", log: OSLog.default, type: .debug)
     }
     
+    func handleFrontFCLeftSwipe() {
+        os_log("swiped left on front", log: OSLog.default, type: .debug)
+    }
+    
     func handleBackFCRightSwipe() {
         os_log("swiped right on back", log: OSLog.default, type: .debug)
+    }
+    
+    func handleBackFCLeftSwipe() {
+        os_log("swiped left on back", log: OSLog.default, type: .debug)
     }
 
     override func didReceiveMemoryWarning() {

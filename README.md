@@ -7,6 +7,7 @@ to-do:
 - fix alignment/auto-layout issues for flashcard front/back/full controller view
 - handle animation
 - write unit tests for flashcard and flashcards
+-- include swipe tests for flashcard unit tests
 - fix-up icon errors
 
 helpful links/references/inspiration:
