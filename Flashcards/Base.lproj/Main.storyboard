@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -22,11 +21,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kjr-qp-BRN">
-                                <rect key="frame" x="35" y="59" width="600" height="250"/>
-                                <connections>
-                                    <segue destination="BYZ-38-t0r" kind="embed" identifier="flashcardFrontSegue" id="OxG-Zf-NxL"/>
-                                </connections>
+                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kjr-qp-BRN">
+                                <rect key="frame" x="35" y="59" width="600" height="235"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </containerView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cz5-J2-bMF">
                                 <rect key="frame" x="590" y="325" width="57" height="30"/>
@@ -38,44 +35,25 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Remove"/>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Name of Deck" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q2U-ss-qtI">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name of Deck" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q2U-ss-qtI">
                                 <rect key="frame" x="275" y="9" width="121" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Slide 1 of ?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ncT-mP-8c9">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Slide 1 of ?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ncT-mP-8c9">
                                 <rect key="frame" x="287" y="324" width="97" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6UI-aT-T5K">
-                                <rect key="frame" x="35" y="59" width="600" height="250"/>
-                                <connections>
-                                    <segue destination="PWA-JX-sgc" kind="embed" identifier="flashcardBackSegue" id="H4t-i4-T0L"/>
-                                </connections>
-                            </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="bottom" secondItem="Kjr-qp-BRN" secondAttribute="bottom" constant="66" id="30q-a9-nFE"/>
-                            <constraint firstItem="6UI-aT-T5K" firstAttribute="top" secondItem="Kjr-qp-BRN" secondAttribute="top" id="5e3-EP-ttI"/>
-                            <constraint firstItem="Kjr-qp-BRN" firstAttribute="leading" secondItem="CZ7-6L-piN" secondAttribute="leadingMargin" constant="15" id="BTX-FM-gYD"/>
-                            <constraint firstItem="Kjr-qp-BRN" firstAttribute="centerX" secondItem="ncT-mP-8c9" secondAttribute="centerX" id="GRJ-M5-ehk"/>
-                            <constraint firstItem="Kjr-qp-BRN" firstAttribute="centerX" secondItem="Q2U-ss-qtI" secondAttribute="centerX" id="HQR-us-kUe"/>
-                            <constraint firstItem="Kjr-qp-BRN" firstAttribute="top" secondItem="CZ7-6L-piN" secondAttribute="top" constant="59" id="IbX-WA-sZA"/>
-                            <constraint firstItem="6UI-aT-T5K" firstAttribute="leading" secondItem="Kjr-qp-BRN" secondAttribute="leading" id="MrQ-cJ-iZn"/>
-                            <constraint firstItem="6UI-aT-T5K" firstAttribute="trailing" secondItem="Kjr-qp-BRN" secondAttribute="trailing" id="R05-XA-2Ex"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Kjr-qp-BRN" secondAttribute="trailing" constant="12" id="TGy-ud-qBY"/>
-                            <constraint firstItem="6UI-aT-T5K" firstAttribute="bottom" secondItem="Kjr-qp-BRN" secondAttribute="bottom" id="agW-QX-ecP"/>
-                            <constraint firstItem="Kjr-qp-BRN" firstAttribute="top" secondItem="Q2U-ss-qtI" secondAttribute="bottom" constant="20" id="imk-05-dT0"/>
-                            <constraint firstItem="ncT-mP-8c9" firstAttribute="top" secondItem="Kjr-qp-BRN" secondAttribute="bottom" constant="15" id="y7x-Or-EQK"/>
-                        </constraints>
                     </view>
                     <connections>
-                        <outlet property="flashcardBackContainerView" destination="6UI-aT-T5K" id="cnL-iw-seJ"/>
-                        <outlet property="flashcardFrontContainerView" destination="Kjr-qp-BRN" id="21a-gx-jOE"/>
+                        <outlet property="flashcardView" destination="Kjr-qp-BRN" id="PYC-2e-rjE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VYk-Ph-33T" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -91,7 +69,7 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="250"/>
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="smu-Y5-4em">
@@ -130,7 +108,7 @@
                         <viewControllerLayoutGuide type="bottom" id="EQv-rE-Lol"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="umx-qV-CkH">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="250"/>
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Olq-tS-AHP">
@@ -151,7 +129,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QJU-LN-n1p" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="199.70014992503749" y="-144"/>
+            <point key="canvasLocation" x="323" y="-145"/>
         </scene>
     </scenes>
 </document>

@@ -10,17 +10,41 @@ import UIKit
 import os.log
 
 class FlashcardDeckViewController: UIViewController {
+    
     // MARK: Properties
-    @IBOutlet weak var flashcardFrontContainerView: UIView!
-    @IBOutlet weak var flashcardBackContainerView: UIView!
-
-    var fcDeck: FlashcardDeck?
+    @IBOutlet weak var flashcardView: UIView! // main view container for a flashcard
+    
+    private var flashcardFront: FlashcardFront?
     
     override func viewDidLoad() {
         os_log("in viewDidLoad", log: OSLog.default, type: .debug)
         
         super.viewDidLoad()
-
+        
+        // MARK: DEBUGGING - REMOVE WHEN NOT NEEDED
+        self.flashcardView.layer.borderColor = UIColor.black.cgColor
+        self.flashcardView.layer.borderWidth = 1.0
+        self.flashcardView.clipsToBounds = true
+        // MARK: END_DEBUGGING
+        
+        print(self.flashcardView.frame.debugDescription)
+        flashcardFront = FlashcardFront(frame: self.flashcardView.bounds)
+        
+        flashcardView.addSubview(flashcardFront!)
+    }
+    
+    /*
+    private var flashcardBackView: FlashcardBackViewController
+    private var showingFrontFlashcard = true
+    
+    var flashcards: FlashcardDeck?
+    
+    
+    override func viewDidLoad() {
+        os_log("in viewDidLoad", log: OSLog.default, type: .debug)
+        
+        super.viewDidLoad()
+     
         // add tap gesture to the front uiview, to recognize when to flip to back
         let frontFCTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         
@@ -49,6 +73,7 @@ class FlashcardDeckViewController: UIViewController {
         
         flashcardFrontContainerView.alpha = 1
         flashcardBackContainerView.alpha = 0
+ 
     }
     
     private func loadSampleFlashcards() {
@@ -130,7 +155,7 @@ class FlashcardDeckViewController: UIViewController {
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         os_log("in prepare", log: OSLog.default, type: .debug)
-        
+     
         if fcDeck === nil { // don't load unnecessarily
             loadSampleFlashcards() // load sample flashcards in prepare because it is loaded before viewDidLoad(), causing a nil problem when trying to pass flashcard data to container views
         }
@@ -162,4 +187,5 @@ class FlashcardDeckViewController: UIViewController {
                 fatalError("Unexpected Segue Identifier; \(segue.identifier)")
         }
     }
+ */
 }
