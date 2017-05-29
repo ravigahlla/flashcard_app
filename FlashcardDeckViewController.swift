@@ -12,25 +12,23 @@ import os.log
 class FlashcardDeckViewController: UIViewController {
     
     // MARK: Properties
-    @IBOutlet weak var flashcardView: UIView! // main view container for a flashcard
+    @IBOutlet weak var flashcardView: UIStackView! // main view container for a flashcard
     
     private var flashcardFront: FlashcardFront?
+    private var flashcardBack: FlashcardBack?
+    
+    private var isShowingFlashcardFront = true // variable to keep tabs on visible side of flashcard
     
     override func viewDidLoad() {
         os_log("in viewDidLoad", log: OSLog.default, type: .debug)
         
         super.viewDidLoad()
         
-        // MARK: DEBUGGING - REMOVE WHEN NOT NEEDED
-        self.flashcardView.layer.borderColor = UIColor.black.cgColor
-        self.flashcardView.layer.borderWidth = 1.0
-        self.flashcardView.clipsToBounds = true
-        // MARK: END_DEBUGGING
+        //self.flashcardFront = FlashcardFront()
+        //self.flashcardView?.addSubview(flashcardFront!)
         
-        print(self.flashcardView.frame.debugDescription)
-        flashcardFront = FlashcardFront(frame: self.flashcardView.bounds)
-        
-        flashcardView.addSubview(flashcardFront!)
+        flashcardBack = FlashcardBack()
+        self.flashcardView.addSubview(flashcardBack!)
     }
     
     /*

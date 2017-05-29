@@ -9,7 +9,13 @@
 import UIKit
 import os.log
 
-@IBDesignable class FlashcardFront: UIStackView {
+@IBDesignable class FlashcardFront: UIStackView, UITextFieldDelegate {
+    
+    // MARK: Properties
+    private var titleLabel = UILabel()
+    private var titleTextField = UITextField()
+    
+    let flashcardViewSpacing = 5.0
 
     // MARK: Initialization
     override init(frame: CGRect) {
@@ -26,42 +32,50 @@ import os.log
         self.setupFlashcardFront()
     }
 
+    // MARK: UITextFieldDelegate
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        // Hide the keyboard.
+        self.titleTextField.resignFirstResponder()
+        return true
+    }
+    
+    // MARK: UITextFieldDelegate
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        // Disable the Save button while editing.
+    }
+    
+    // MARK: UITextFieldDelegate
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        os_log("in textFieldDidEndEditing", log: OSLog.default, type: .debug)
+        self.titleLabel.text = self.titleTextField.text
+        //saveFlashcard()
+    }
+    
     // MARK: Private Methods
     private func setupStackView() {
         os_log("in setupStackView", log: OSLog.default, type: .debug)
         
-        //self.axis = UILayoutConstraintAxis.vertical
-        /*self.distribution = UIStackViewDistribution.fillEqually
-        self.alignment = UIStackViewAlignment.fill
-        self.spacing = 5*/
-        
+        self.axis = UILayoutConstraintAxis.vertical // stack views vertically
+        self.distribution = UIStackViewDistribution.fill
+        self.alignment = UIStackViewAlignment.center
+        self.spacing = CGFloat(self.flashcardViewSpacing)
         self.translatesAutoresizingMaskIntoConstraints = false
     }
     
     private func setupFlashcardFront() {
         os_log("in setupFrontFlashcard", log: OSLog.default, type: .debug)
- 
         
-        let questionLabel = UILabel(frame: CGRect(x: center.x, y: center.y, width: 100/*self.frame.width*/, height: 100/*self.frame.height*/))
-        questionLabel.translatesAutoresizingMaskIntoConstraints = false
- 
-        questionLabel.heightAnchor.constraint(equalToConstant: self.frame.height).isActive = true
-        questionLabel.widthAnchor.constraint(equalToConstant: self.frame.width).isActive =  true
- 
-        questionLabel.layer.borderColor = UIColor.black.cgColor
-        questionLabel.layer.borderWidth = 1.0
-        questionLabel.textAlignment = NSTextAlignment.center
-        questionLabel.text = "Sample Flashcard"
+        self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.titleLabel.textAlignment = NSTextAlignment.center
+        self.titleLabel.text = "(no question)"
+        addArrangedSubview(titleLabel)
         
-        self.addArrangedSubview(questionLabel)
- 
-        /*
-        let questionTextField = UITextField(frame: CGRect(x: center.x, y: center.y, width: 100, height: 100))
-        questionTextField.translatesAutoresizingMaskIntoConstraints = false
-        questionTextField.textAlignment = NSTextAlignment.center
-        questionTextField.placeholder = "enter new question here..."
-        
-        self.addArrangedSubview(questionTextField)
-        */
+        self.titleTextField.translatesAutoresizingMaskIntoConstraints = false
+        self.titleTextField.textAlignment = NSTextAlignment.center
+        self.titleTextField.borderStyle = UITextBorderStyle.bezel
+        self.titleTextField.placeholder = "enter new title here"
+        self.titleTextField.enablesReturnKeyAutomatically = true
+        self.titleTextField.delegate = self
+        addArrangedSubview(titleTextField)
     }
 }

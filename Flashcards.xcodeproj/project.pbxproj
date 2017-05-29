@@ -14,6 +14,7 @@
 		B3284D581EC95CBC0043438F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B3284D561EC95CBC0043438F /* LaunchScreen.storyboard */; };
 		B3284D631EC95CBC0043438F /* FlashcardsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3284D621EC95CBC0043438F /* FlashcardsTests.swift */; };
 		B360DE2E1ED7D45D0009CB39 /* FlashcardFront.swift in Sources */ = {isa = PBXBuildFile; fileRef = B360DE2D1ED7D45D0009CB39 /* FlashcardFront.swift */; };
+		B360DE301EDCA4B80009CB39 /* FlashcardBack.swift in Sources */ = {isa = PBXBuildFile; fileRef = B360DE2F1EDCA4B80009CB39 /* FlashcardBack.swift */; };
 		B38A2E4E1EC9858B00D1EAAB /* FlashcardBackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38A2E4D1EC9858B00D1EAAB /* FlashcardBackViewController.swift */; };
 		B38A2E501ECA138B00D1EAAB /* Flashcard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38A2E4F1ECA138B00D1EAAB /* Flashcard.swift */; };
 		B3A39B301ED0ABC5004179E1 /* FlashcardDeckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A39B2F1ED0ABC5004179E1 /* FlashcardDeckViewController.swift */; };
@@ -43,6 +44,7 @@
 		B3284D621EC95CBC0043438F /* FlashcardsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashcardsTests.swift; sourceTree = "<group>"; };
 		B3284D641EC95CBC0043438F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B360DE2D1ED7D45D0009CB39 /* FlashcardFront.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlashcardFront.swift; sourceTree = "<group>"; };
+		B360DE2F1EDCA4B80009CB39 /* FlashcardBack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlashcardBack.swift; sourceTree = "<group>"; };
 		B38A2E4D1EC9858B00D1EAAB /* FlashcardBackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlashcardBackViewController.swift; sourceTree = "<group>"; };
 		B38A2E4F1ECA138B00D1EAAB /* Flashcard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Flashcard.swift; sourceTree = "<group>"; };
 		B3A39B2F1ED0ABC5004179E1 /* FlashcardDeckViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FlashcardDeckViewController.swift; path = ../FlashcardDeckViewController.swift; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 				B3A39B331ED3CAC3004179E1 /* FlashcardDeck.swift */,
 				B3A39B2F1ED0ABC5004179E1 /* FlashcardDeckViewController.swift */,
 				B360DE2D1ED7D45D0009CB39 /* FlashcardFront.swift */,
+				B360DE2F1EDCA4B80009CB39 /* FlashcardBack.swift */,
 				B3284D4F1EC95CBB0043438F /* FlashcardFrontViewController.swift */,
 				B38A2E4D1EC9858B00D1EAAB /* FlashcardBackViewController.swift */,
 				B3284D511EC95CBC0043438F /* Main.storyboard */,
@@ -225,6 +228,7 @@
 				B3284D501EC95CBB0043438F /* FlashcardFrontViewController.swift in Sources */,
 				B38A2E4E1EC9858B00D1EAAB /* FlashcardBackViewController.swift in Sources */,
 				B3A39B301ED0ABC5004179E1 /* FlashcardDeckViewController.swift in Sources */,
+				B360DE301EDCA4B80009CB39 /* FlashcardBack.swift in Sources */,
 				B38A2E501ECA138B00D1EAAB /* Flashcard.swift in Sources */,
 				B3284D4E1EC95CBB0043438F /* AppDelegate.swift in Sources */,
 			);
