@@ -7,6 +7,7 @@ to-do:
 - fix alignment/auto-layout issues for flashcard front/back/full controller view
 - handle animation
 - fix flashcard back textview scrolling limitation (enlarge textview, or re-architect whole card back to UIView, which breaks more things with the front)
+-- one way to do this is the make the main flashcard a UIView, and then the FrontFlashcard a StackedView, and add it is a subview to the main flashcard, but maxed out in size
 - write unit tests for flashcard and flashcards
 -- include swipe tests for flashcard unit tests
 - fix-up icon errors
