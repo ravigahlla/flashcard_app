@@ -55,7 +55,7 @@ class FlashcardFrontViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: UITextFieldDelegate
     func textFieldDidEndEditing(_ textField: UITextField) {
-        flashcard?.getQuestion() = textField.text!
+        flashcard?.setQuestion(q: textField.text!)
         fcQuestionLabel.text = flashcard?.getQuestion()
         
         //saveFlashcard()
