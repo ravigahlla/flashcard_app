@@ -23,12 +23,12 @@ class FlashcardBackViewController: UIViewController, UITextViewDelegate {
         
         // setup views if editing an existing Flashcard
         if let flashcard = flashcard {
-            flashcardAnswerTextView.text = flashcard.fcAnswer
+            flashcardAnswerTextView.text = flashcard.getAnswer()
             os_log("loading back flashcard with sent data", log: OSLog.default, type: .debug)
-            print("flashcard.fcAnswer = \(flashcard.fcAnswer)")
+            print("flashcard.fcAnswer = \(flashcard.getAnswer())")
         } else {
             flashcard = Flashcard()
-            flashcardAnswerTextView.text = flashcard?.defaultA
+            flashcardAnswerTextView.text = "default answer"
         }
     }
 

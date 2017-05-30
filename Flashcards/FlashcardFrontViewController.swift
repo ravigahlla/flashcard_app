@@ -27,12 +27,12 @@ class FlashcardFrontViewController: UIViewController, UITextFieldDelegate {
         
         // setup views if editing an existing Flashcard
         if let flashcard = flashcard {
-            fcQuestionLabel.text = flashcard.fcQuestion
+            fcQuestionLabel.text = flashcard.getQuestion()
             os_log("loading front flashcard with sent data", log: OSLog.default, type: .debug)
-            print("flashcard.fcQuestion = \(flashcard.fcQuestion)")
+            print("flashcard.fcQuestion = \(flashcard.getQuestion())")
         } else {
             flashcard = Flashcard()
-            fcQuestionLabel.text = flashcard?.defaultQ
+            fcQuestionLabel.text = "default"
         }
     }
 
@@ -55,8 +55,8 @@ class FlashcardFrontViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: UITextFieldDelegate
     func textFieldDidEndEditing(_ textField: UITextField) {
-        flashcard?.fcQuestion = textField.text!
-        fcQuestionLabel.text = flashcard?.fcQuestion
+        flashcard?.getQuestion() = textField.text!
+        fcQuestionLabel.text = flashcard?.getQuestion()
         
         //saveFlashcard()
     }
