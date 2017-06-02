@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -31,26 +32,33 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Remove"/>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name of Deck" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q2U-ss-qtI">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Name of Deck" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q2U-ss-qtI">
                                 <rect key="frame" x="275" y="9" width="121" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Slide 1 of ?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ncT-mP-8c9">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Slide 1 of ?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ncT-mP-8c9">
                                 <rect key="frame" x="287" y="324" width="97" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="jhz-ST-3bu">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="jhz-ST-3bu">
                                 <rect key="frame" x="70" y="69" width="531" height="218"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="jhz-ST-3bu" secondAttribute="trailing" constant="46" id="5Hs-Kp-7Th"/>
+                            <constraint firstItem="jhz-ST-3bu" firstAttribute="centerX" secondItem="ncT-mP-8c9" secondAttribute="centerX" id="8Hb-hE-5YR"/>
+                            <constraint firstAttribute="bottom" secondItem="jhz-ST-3bu" secondAttribute="bottom" constant="88" id="8kj-JX-tIz"/>
+                            <constraint firstItem="jhz-ST-3bu" firstAttribute="top" secondItem="Q2U-ss-qtI" secondAttribute="bottom" constant="30" id="Cma-wd-GCb"/>
+                            <constraint firstItem="jhz-ST-3bu" firstAttribute="centerX" secondItem="Q2U-ss-qtI" secondAttribute="centerX" id="W0l-YE-JTj"/>
+                            <constraint firstItem="jhz-ST-3bu" firstAttribute="top" secondItem="CZ7-6L-piN" secondAttribute="top" constant="69" id="aJO-M7-gyO"/>
+                            <constraint firstItem="jhz-ST-3bu" firstAttribute="leading" secondItem="CZ7-6L-piN" secondAttribute="leadingMargin" constant="50" id="amb-fB-gQc"/>
+                            <constraint firstItem="ncT-mP-8c9" firstAttribute="top" secondItem="jhz-ST-3bu" secondAttribute="bottom" constant="37" id="kZn-aZ-bsi"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="flashcardView" destination="jhz-ST-3bu" id="sQP-xJ-Yw2"/>
@@ -97,7 +105,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-341" y="-144"/>
+            <point key="canvasLocation" x="-341" y="-146"/>
         </scene>
         <!--Flashcard Back View Controller-->
         <scene sceneID="qir-NM-rXM">

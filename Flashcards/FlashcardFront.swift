@@ -55,11 +55,38 @@ import os.log
     private func setupStackView() {
         os_log("in setupStackView", log: OSLog.default, type: .debug)
         
+        /*
         self.axis = UILayoutConstraintAxis.vertical // stack views vertically
         self.distribution = UIStackViewDistribution.fill
         self.alignment = UIStackViewAlignment.center
         self.spacing = CGFloat(self.flashcardViewSpacing)
+        self.clipsToBounds = true
         self.translatesAutoresizingMaskIntoConstraints = false
+        */
+        print(self.superview?.frame ?? "(empty)")
+        print("frame = ", self.frame)
+        print("bounds = ", self.bounds)
+        
+        /*
+        let margins = self.layoutMarginsGuide
+         
+        self.centerXAnchor.constraint(equalTo: margins.centerXAnchor).isActive = true
+        self.centerYAnchor.constraint(equalTo: margins.centerYAnchor).isActive = true
+        self.leadingAnchor.constraint(equalTo: margins.leadingAnchor).isActive = true
+        self.trailingAnchor.constraint(equalTo: margins.trailingAnchor).isActive = true
+        self.widthAnchor.constraint(equalTo: margins.widthAnchor).isActive = true
+        self.heightAnchor.constraint(equalTo: margins.heightAnchor).isActive = true
+        */
+        // center this view
+        //self.addConstraint(NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1.0, constant: self.frame.width / 2.0))
+        
+        // max out the width of this UIStackView
+        /*
+        self.addConstraint(NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.width, multiplier: 1.0, constant: self.bounds.width))
+        
+        // max out the height of this UIStackView
+        self.addConstraint(NSLayoutConstraint(item: self, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.height, multiplier: 1.0, constant: self.bounds.height))
+         */
     }
     
     private func setupFlashcardFront() {
@@ -68,8 +95,13 @@ import os.log
         self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
         self.titleLabel.textAlignment = NSTextAlignment.center
         self.titleLabel.text = "(no question)"
+        /*
+        self.titleLabel.widthAnchor.constraint(equalToConstant: 20).isActive = true
+        self.titleLabel.heightAnchor.constraint(equalToConstant: 10).isActive = true
+         */
         addArrangedSubview(titleLabel)
         
+        /*
         self.titleTextField.translatesAutoresizingMaskIntoConstraints = false
         self.titleTextField.textAlignment = NSTextAlignment.center
         self.titleTextField.borderStyle = UITextBorderStyle.bezel
@@ -77,5 +109,6 @@ import os.log
         self.titleTextField.enablesReturnKeyAutomatically = true
         self.titleTextField.delegate = self
         addArrangedSubview(titleTextField)
+        */
     }
 }

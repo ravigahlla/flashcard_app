@@ -24,23 +24,26 @@ class FlashcardDeckViewController: UIViewController {
         
         super.viewDidLoad()
         
+        flashcardView.clipsToBounds = false
+        
         initCorrectFlashcardFace()
     }
     
     // MARK: Private methods
     private func initCorrectFlashcardFace() {
         if isFrontFlashcardFace { // there can be only one...
-            self.flashcardFront = FlashcardFront()
-            self.flashcardView?.addSubview(flashcardFront!)
+            self.flashcardFront = FlashcardFront(frame: CGRect(x: 0, y: 0, width: self.flashcardView.frame.width, height: self.flashcardView.frame.height))
+            self.flashcardView?.addSubview(flashcardFront!) // debugging
         } else {
-            flashcardBack = FlashcardBack()
+            flashcardBack = FlashcardBack(frame: CGRect(x: 0, y: 0, width: self.flashcardView.frame.width, height: self.flashcardView.frame.height))
+            self.flashcardBack?.clipsToBounds = true
             self.flashcardView.addSubview(flashcardBack!)
         }
     }
     
     /*
     var flashcards: FlashcardDeck?
-    
+
     
     override func viewDidLoad() {
         os_log("in viewDidLoad", log: OSLog.default, type: .debug)
