@@ -24,8 +24,73 @@ class FlashcardDeckViewController: UIViewController {
         
         super.viewDidLoad()
         
-        initCorrectFlashcardFace()
+        initFlashcard()
         initFlashcardGestures()
+    }
+    
+    // MARK: Private methods
+    private func initFlashcard() {
+        
+        // store common superview dimensions
+        let flashcardFaceRect = CGRect(x: 0.0, y: 0.0, width: self.flashcardView.frame.width, height: self.flashcardView.frame.height)
+        
+        // add the front flashcard in the subviews array
+        self.flashcardFront = FlashcardFront(frame: flashcardFaceRect)
+        self.flashcardView?.addSubview(flashcardFront!)
+        
+        // add the back flashcard in the subviews array, and hide it from the user
+        self.flashcardBack = FlashcardBack(frame: flashcardFaceRect)
+        self.flashcardView.addSubview(flashcardBack!)
+        flashcardBack?.isHidden = true
+        
+        /*
+        for subview in self.flashcardView.subviews { // debugging
+            print(subview.debugDescription)
+        }*/
+    }
+    
+    private func initFlashcardGestures() {
+        
+        flashcardFront?.isUserInteractionEnabled = true
+        flashcardBack?.isUserInteractionEnabled = true
+        
+        // add tap gesture to the flashcard, to recognize when to flip to back
+        let fcFrontTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        flashcardFront?.addGestureRecognizer(fcFrontTapGesture)
+        
+        let fcBackTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        flashcardBack?.addGestureRecognizer(fcBackTapGesture)
+    }
+    
+    func handleTap(sender: UITapGestureRecognizer) {
+        os_log("handle tap gesture", log: OSLog.default, type: .debug)
+        
+        if isFrontFlashcardFacing {
+            print("tapped on front")
+            
+            // before you flip, hide the subviews
+            self.flashcardFront?.isHidden = true
+            self.flashcardBack?.isHidden = false
+            
+            // the bloody flip animation
+            UIView.transition(from: self.flashcardFront!, to: self.flashcardBack!, duration: 0.3, options: .transitionFlipFromRight)
+            
+            // update what flashcard is facing front
+            self.isFrontFlashcardFacing = false
+
+        } else {
+            print("tapped on back")
+            
+            // before you flip, hide the subviews
+            self.flashcardFront?.isHidden = false
+            self.flashcardBack?.isHidden = true
+            
+            // the bloody flip animation
+            UIView.transition(from: self.flashcardBack!, to: self.flashcardFront!, duration: 0.3, options: .transitionFlipFromRight)
+            
+            // update what flashcard is facing front
+            self.isFrontFlashcardFacing = true
+        }
     }
     
     // MARK: Navigation
@@ -37,56 +102,6 @@ class FlashcardDeckViewController: UIViewController {
          switch (segue.identifier ?? "") {
          
          }*/
-    }
-    
-    // MARK: Private methods
-    private func initCorrectFlashcardFace() {
-        
-        let flashcardFaceRect = CGRect(x: 0.0, y: 0.0, width: self.flashcardView.frame.width, height: self.flashcardView.frame.height) // store the frame dimensions
-        
-        if isFrontFlashcardFacing { // there can be only one...
-            
-            self.flashcardFront = FlashcardFront(frame: flashcardFaceRect)
-            
-            self.flashcardView?.addSubview(flashcardFront!) // debugging
-            
-        } else {
-            
-            flashcardBack = FlashcardBack(frame: flashcardFaceRect)
-            
-            self.flashcardView.addSubview(flashcardBack!)
-        
-        }
-    }
-    
-    private func initFlashcardGestures() {
-        
-        var flashcard: UIView
-        
-        if isFrontFlashcardFacing {
-            flashcard = flashcardFront!
-            print("assigned front")
-            
-        } else {
-            flashcard = flashcardBack!
-            print("assigned back")
-        }
-        
-        flashcard.isUserInteractionEnabled = true // allow for gesture recognition
-        
-        // add tap gesture to the flashcard, to recognize when to flip to back
-        let fcTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-        flashcard.addGestureRecognizer(fcTapGesture)
-    }
-    
-    func handleTap(sender: UITapGestureRecognizer) {
-        os_log("handle tap gesture", log: OSLog.default, type: .debug)
-        
-        if isFrontFlashcardFacing {
-            print("tapped on front")
-        } else {
-            print("tapped on back")
-        }
     }
     
     /*
@@ -144,43 +159,6 @@ class FlashcardDeckViewController: UIViewController {
         os_log("loaded sample flashcards", log: OSLog.default, type: .debug)
     }
     
-    func handleTap() {
-        
-        // flip the view on whatever is being displayed
-        if flashcardFrontContainerView.alpha == 0 {
-            os_log("tapped on back", log: OSLog.default, type: .debug)
-            /*
-            UIView.transition(from: self.flashcardFrontContainerView, to: self.flashcardBackContainerView, duration: 1, options: UIViewAnimationOptions.transitionFlipFromRight, completion: nil)
-            */
-            /*
-            UIView.animate(withDuration: 0.5, animations: {
-                self.flashcardFrontContainerView.alpha = 0
-                self.flashcardBackContainerView.alpha = 1
-            })*/
-            
-            // flip the cards
-            flashcardFrontContainerView.alpha = 1
-            flashcardBackContainerView.alpha = 0
-            os_log("flipped back to front", log: OSLog.default, type: .debug)
-            
-        } else {
-            os_log("tapped on front", log: OSLog.default, type: .debug)
-            /*
-            UIView.transition(from: self.flashcardBackContainerView, to: self.flashcardFrontContainerView, duration: 1, options: UIViewAnimationOptions.transitionFlipFromRight, completion: nil)
-            */
-            
-            // flip the cards
-            
-            /*
-            UIView.animate(withDuration: 0.5, animations: {
-                self.flashcardFrontContainerView.alpha = 1
-                self.flashcardBackContainerView.alpha = 0
-            })*/
-            flashcardFrontContainerView.alpha = 0
-            flashcardBackContainerView.alpha = 1
-            os_log("flipped front to back", log: OSLog.default, type: .debug)
-        }
-    }
     
     func handleFrontFCRightSwipe() {
         os_log("swiped right on front", log: OSLog.default, type: .debug)

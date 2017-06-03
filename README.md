@@ -4,11 +4,12 @@ iOS 10.3 Mobile-App to represent flashcards
 to-do:
 - fix alignment/auto-layout issues for flashcard front/back/full controller view
 - fix flashcard back textview scrolling limitation (one way to do this is the make the main flashcard a UIView, and then the FrontFlashcard a StackedView, and add it is a subview to the main flashcard, but maxed out in size)
-- handle animation
+- is there a way of not instantiating and storing both sides of the flashcard, instantiating when necessary?
 - write unit tests for flashcard and flashcards
 -- include swipe tests for flashcard unit tests
 - fix-up icon errors
 - add swipe gesture inside text views of flashcard
+- remove magic numbers from FlashcardDeckViewController
 
 helpful links/references/inspiration:
 - https://developer.apple.com/library/content/referencelibrary/GettingStarted/DevelopiOSAppsSwift/index.html#//apple_ref/doc/uid/TP40015214-CH2-SW1
@@ -24,3 +25,5 @@ helpful links/references/inspiration:
 - https://www.natashatherobot.com/ios-frame-vs-bounds-resize-basic-uitableview-cell/
 - https://stackoverflow.com/questions/41236473/scrollview-add-subview-in-swift-3
 - https://stackoverflow.com/questions/26180822/swift-adding-constraints-programmatically
+- https://stackoverflow.com/questions/26086175/swift-retrieving-subviews
+- http://www.howtobuildsoftware.com/index.php/how-do/byAz/ios-swift-uiview-uiviewcontroller-uitapgesturerecognizer-flipping-view-in-swift-issues-with-whole-screen-flipping-tap-gesture-only-works-twice
