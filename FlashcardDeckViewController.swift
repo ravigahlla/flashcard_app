@@ -24,6 +24,10 @@ class FlashcardDeckViewController: UIViewController {
         
         super.viewDidLoad()
         
+        // draw a black border around the flashcard
+        self.flashcardView.layer.borderWidth = 1.0
+        self.flashcardView.layer.borderColor = UIColor.black.cgColor
+        
         initFlashcard()
         initFlashcardGestures()
     }
