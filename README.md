@@ -27,3 +27,4 @@ helpful links/references/inspiration:
 - https://stackoverflow.com/questions/26180822/swift-adding-constraints-programmatically
 - https://stackoverflow.com/questions/26086175/swift-retrieving-subviews
 - http://www.howtobuildsoftware.com/index.php/how-do/byAz/ios-swift-uiview-uiviewcontroller-uitapgesturerecognizer-flipping-view-in-swift-issues-with-whole-screen-flipping-tap-gesture-only-works-twice
+- https://stackoverflow.com/questions/28938660/how-to-lock-orientation-of-one-view-controller-to-portrait-mode-only-in-swift

@@ -28,6 +28,21 @@ class FlashcardDeckViewController: UIViewController {
         initFlashcardGestures()
     }
     
+    // MARK: Force a landscape orientation of the flashcard view controller
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        AppDelegate.AppUtility.lockOrientation(.landscape)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        AppDelegate.AppUtility.lockOrientation(.all)
+    }
+    
+    override var shouldAutorotate: Bool {
+        return true
+    }
+    
     // MARK: Private methods
     private func initFlashcard() {
         
