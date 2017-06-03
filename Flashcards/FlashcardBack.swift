@@ -40,20 +40,20 @@ import os.log
         self.distribution = UIStackViewDistribution.fill
         self.alignment = UIStackViewAlignment.center
         self.spacing = CGFloat(self.flashcardViewSpacing)
-        self.translatesAutoresizingMaskIntoConstraints = false
     }
     
     private func setupFlashcardBack() {
         os_log("in setupBackFlashcard", log: OSLog.default, type: .debug)
         
         self.answerTextView.translatesAutoresizingMaskIntoConstraints = false
-        self.answerTextView.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
+        
+        self.answerTextView.widthAnchor.constraint(equalToConstant: 200.0).isActive = true
         self.answerTextView.delegate = self
+        
         self.answerTextView.isUserInteractionEnabled = true
         self.answerTextView.isEditable = true
         self.answerTextView.backgroundColor = UIColor.yellow
         self.answerTextView.isSelectable = true
-        //self.answerTextView.clipsToBounds = true
         self.answerTextView.isScrollEnabled = false // problem with rendering if set to true: UIStackView needs a definitive size
         self.answerTextView.text = "this is a sample answer"
         addArrangedSubview(self.answerTextView)
@@ -63,6 +63,7 @@ import os.log
         self.answerSaveButton.isEnabled = true
         self.answerSaveButton.setTitle("Save", for: UIControlState.normal)
         self.answerSaveButton.setTitleColor(UIColor.black, for: UIControlState.normal)
+        self.answerSaveButton.widthAnchor.constraint(equalToConstant: 100.0).isActive = true
         addArrangedSubview(self.answerSaveButton)
     }
 

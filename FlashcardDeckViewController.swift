@@ -12,19 +12,19 @@ import os.log
 class FlashcardDeckViewController: UIViewController {
     
     // MARK: Properties
-    @IBOutlet weak var flashcardView: UIStackView! // main view container for a flashcard
+    @IBOutlet weak var flashcardView: UIView! // main view container for a flashcard
     
     private var flashcardFront: FlashcardFront?
     private var flashcardBack: FlashcardBack?
     
-    private var isFrontFlashcardFace = true // variable to keep tabs on visible side of flashcard
+    private var isFrontFlashcardFace = false // variable to keep tabs on visible side of flashcard
     
     override func viewDidLoad() {
         os_log("in viewDidLoad", log: OSLog.default, type: .debug)
         
         super.viewDidLoad()
         
-        flashcardView.clipsToBounds = false
+        //flashcardView.clipsToBounds = false
         
         initCorrectFlashcardFace()
     }
