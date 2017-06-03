@@ -33,7 +33,17 @@ class FlashcardsTests: XCTestCase {
         }
     }
     
-    //MARK: Flashcard Class Tests
-    
     //MARK: FlashcardDeck Class Tests
+    func testFlashcardsInitializationSucceeds() {
+        // non-empty flashcard deck string
+        // non-empty position
+        // initialized flashcards
+    }
+    
+    func testFlashcardsInitializationFails() {
+        // non-empty flashcard deck
+        // empty position
+        // negative position
+        // empty flashcards
+    }
 }

@@ -33,4 +33,16 @@ class FlashcardTests: XCTestCase {
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
     
+    // MARK: Flashcard class tests
+    func testFlashcardInitializationSucceeds() {
+        // empty string
+        
+        // really long string
+    }
+    
+    func testFlashcardInitializationFails() {
+        // non-string
+        
+        // non UIStackView
+    }
 }

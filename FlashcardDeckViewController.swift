@@ -17,27 +17,33 @@ class FlashcardDeckViewController: UIViewController {
     private var flashcardFront: FlashcardFront?
     private var flashcardBack: FlashcardBack?
     
-    private var isFrontFlashcardFace = false // variable to keep tabs on visible side of flashcard
+    private var isFrontFlashcardFacing = true // variable to keep tabs on visible side of flashcard
     
     override func viewDidLoad() {
         os_log("in viewDidLoad", log: OSLog.default, type: .debug)
         
         super.viewDidLoad()
         
-        //flashcardView.clipsToBounds = false
-        
         initCorrectFlashcardFace()
     }
     
     // MARK: Private methods
     private func initCorrectFlashcardFace() {
-        if isFrontFlashcardFace { // there can be only one...
-            self.flashcardFront = FlashcardFront(frame: CGRect(x: 0, y: 0, width: self.flashcardView.frame.width, height: self.flashcardView.frame.height))
+        
+        let flashcardFaceRect = CGRect(x: 0.0, y: 0.0, width: self.flashcardView.frame.width, height: self.flashcardView.frame.height) // store the frame dimensions
+        
+        if isFrontFlashcardFacing { // there can be only one...
+            
+            self.flashcardFront = FlashcardFront(frame: flashcardFaceRect)
+            
             self.flashcardView?.addSubview(flashcardFront!) // debugging
+            
         } else {
-            flashcardBack = FlashcardBack(frame: CGRect(x: 0, y: 0, width: self.flashcardView.frame.width, height: self.flashcardView.frame.height))
-            self.flashcardBack?.clipsToBounds = true
+            
+            flashcardBack = FlashcardBack(frame: flashcardFaceRect)
+            
             self.flashcardView.addSubview(flashcardBack!)
+        
         }
     }
     
