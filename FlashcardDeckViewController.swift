@@ -25,6 +25,18 @@ class FlashcardDeckViewController: UIViewController {
         super.viewDidLoad()
         
         initCorrectFlashcardFace()
+        initFlashcardGestures()
+    }
+    
+    // MARK: Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        os_log("in prepare", log: OSLog.default, type: .debug)
+        
+        super.prepare(for: segue, sender: sender)
+        /*
+         switch (segue.identifier ?? "") {
+         
+         }*/
     }
     
     // MARK: Private methods
@@ -44,6 +56,36 @@ class FlashcardDeckViewController: UIViewController {
             
             self.flashcardView.addSubview(flashcardBack!)
         
+        }
+    }
+    
+    private func initFlashcardGestures() {
+        
+        var flashcard: UIView
+        
+        if isFrontFlashcardFacing {
+            flashcard = flashcardFront!
+            print("assigned front")
+            
+        } else {
+            flashcard = flashcardBack!
+            print("assigned back")
+        }
+        
+        flashcard.isUserInteractionEnabled = true // allow for gesture recognition
+        
+        // add tap gesture to the flashcard, to recognize when to flip to back
+        let fcTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        flashcard.addGestureRecognizer(fcTapGesture)
+    }
+    
+    func handleTap(sender: UITapGestureRecognizer) {
+        os_log("handle tap gesture", log: OSLog.default, type: .debug)
+        
+        if isFrontFlashcardFacing {
+            print("tapped on front")
+        } else {
+            print("tapped on back")
         }
     }
     

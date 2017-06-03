@@ -57,10 +57,10 @@ import os.log
         
         self.axis = UILayoutConstraintAxis.vertical // stack views vertically
         self.spacing = CGFloat(self.flashcardViewSpacing)
-        print(self.superview?.frame ?? "(empty)")
+        /*
         print("frame = ", self.frame)
         print("bounds = ", self.bounds)
-        
+        */
         /*
         //self.widthAnchor.constraint(equalToConstant: margins.widthAnchor).isActive = true
         self.heightAnchor.constraint(equalToConstant: 15.0).isActive = true
