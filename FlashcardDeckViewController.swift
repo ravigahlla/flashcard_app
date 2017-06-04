@@ -12,6 +12,8 @@ import os.log
 class FlashcardDeckViewController: UIViewController {
     
     // MARK: Properties
+    var flashcardDeck: FlashcardDeck?
+    
     @IBOutlet weak var flashcardView: UIView! // main view container for a flashcard
     
     private var flashcardFront: FlashcardFront?
@@ -50,15 +52,20 @@ class FlashcardDeckViewController: UIViewController {
     // MARK: Private methods
     private func initFlashcard() {
         
+        // load sample data
+        loadSampleFlashcardDeck()
+        
         // store common superview dimensions
         let flashcardFaceRect = CGRect(x: 0.0, y: 0.0, width: self.flashcardView.frame.width, height: self.flashcardView.frame.height)
         
         // add the front flashcard in the subviews array
         self.flashcardFront = FlashcardFront(frame: flashcardFaceRect)
+        self.flashcardFront?.titleLabel.text = self.flashcardDeck?.getFlashcardAt(position: (self.flashcardDeck?.currentPosition)!).getQuestion()
         self.flashcardView?.addSubview(flashcardFront!)
         
         // add the back flashcard in the subviews array, and hide it from the user
         self.flashcardBack = FlashcardBack(frame: flashcardFaceRect)
+        self.flashcardBack?.answerTextView.text = self.flashcardDeck?.getFlashcardAt(position: (self.flashcardDeck?.currentPosition)!).getAnswer()
         self.flashcardView.addSubview(flashcardBack!)
         flashcardBack?.isHidden = true
         
@@ -170,6 +177,22 @@ class FlashcardDeckViewController: UIViewController {
         print(debug)
     }
     
+    // MARK: Sample data
+    private func loadSampleFlashcardDeck() {
+        
+        guard let fc1 = Flashcard(q: "What is 2+2?", a: "4") as? Flashcard else {
+            fatalError("Unable to instantiate fc1")
+        }
+        
+        guard let fc2 = Flashcard(q: "How do you say \"dream\" in Spanish?", a: "Sueño") as? Flashcard else {
+            fatalError("Unable to instantiate fc2")
+        }
+        
+        self.flashcardDeck = FlashcardDeck(name: "Sample Deck", currentPosition: 0, deck: [fc1, fc2])
+        
+        os_log("loaded sample flashcards", log: OSLog.default, type: .debug)
+    }
+    
     // MARK: Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         os_log("in prepare", log: OSLog.default, type: .debug)
@@ -182,22 +205,6 @@ class FlashcardDeckViewController: UIViewController {
     }
     
     /*
-    var flashcards: FlashcardDeck?
-    
-    private func loadSampleFlashcards() {
-        
-        guard let fc1 = Flashcard(fcQuestion: "What is 2+2?", fcAnswer: "4") else {
-            fatalError("Unable to instantiate fc1")
-        }
-        
-        guard let fc2 = Flashcard(fcQuestion: "How do you say \"dream\" in Spanish?", fcAnswer: "Sueño") else {
-            fatalError("Unable to instantiate fc2")
-        }
-        
-        fcDeck = FlashcardDeck(name: "Sample Deck", currentPosition: 0, deck: [fc1, fc2])
-        
-        os_log("loaded sample flashcards", log: OSLog.default, type: .debug)
-    }
     
     // MARK: - Navigation
 

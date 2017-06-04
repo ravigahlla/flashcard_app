@@ -12,8 +12,8 @@ import os.log
 @IBDesignable class FlashcardBack: UIStackView, UITextViewDelegate {
     
     // MARK: Properties
-    private var answerTextView = UITextView()
-    private var answerSaveButton = UIButton(type: UIButtonType.system)
+    var answerTextView = UITextView()
+    var answerSaveButton = UIButton(type: UIButtonType.system)
 
     let flashcardViewSpacing = 5.0
     

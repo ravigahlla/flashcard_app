@@ -12,8 +12,8 @@ import os.log
 @IBDesignable class FlashcardFront: UIStackView, UITextFieldDelegate {
     
     // MARK: Properties
-    private var titleLabel = UILabel()
-    private var titleTextField = UITextField()
+    var titleLabel = UILabel()
+    var titleTextField = UITextField()
     
     let flashcardViewSpacing = 5.0
 
