@@ -30,6 +30,10 @@ class FlashcardDeckViewController: UIViewController {
         self.flashcardView.layer.borderWidth = 1.0
         self.flashcardView.layer.borderColor = UIColor.black.cgColor
         
+        // load sample data
+        loadSampleFlashcardDeck()
+        
+        // initialize the flashcard
         initFlashcard()
         initFlashcardGestures()
     }
@@ -52,20 +56,16 @@ class FlashcardDeckViewController: UIViewController {
     // MARK: Private methods
     private func initFlashcard() {
         
-        // load sample data
-        loadSampleFlashcardDeck()
-        
         // store common superview dimensions
         let flashcardFaceRect = CGRect(x: 0.0, y: 0.0, width: self.flashcardView.frame.width, height: self.flashcardView.frame.height)
         
         // add the front flashcard in the subviews array
         self.flashcardFront = FlashcardFront(frame: flashcardFaceRect)
-        self.flashcardFront?.titleLabel.text = self.flashcardDeck?.getFlashcardAt(position: (self.flashcardDeck?.currentPosition)!).getQuestion()
-        self.flashcardView?.addSubview(flashcardFront!)
-        
-        // add the back flashcard in the subviews array, and hide it from the user
         self.flashcardBack = FlashcardBack(frame: flashcardFaceRect)
-        self.flashcardBack?.answerTextView.text = self.flashcardDeck?.getFlashcardAt(position: (self.flashcardDeck?.currentPosition)!).getAnswer()
+        
+        updateFlashcardData() // load the data from the deck
+        
+        self.flashcardView?.addSubview(flashcardFront!)
         self.flashcardView.addSubview(flashcardBack!)
         flashcardBack?.isHidden = true
         
@@ -158,12 +158,20 @@ class FlashcardDeckViewController: UIViewController {
         switch (sender.direction) {
             case UISwipeGestureRecognizerDirection.up:
                 debug += "up on the "
+                self.flashcardDeck?.nextFC() // advance to the next card
+                updateFlashcardData() // and update the flashcards
             case UISwipeGestureRecognizerDirection.down:
                 debug += "down on the "
+                self.flashcardDeck?.nextFC() // advance to the next card
+                updateFlashcardData() // and update the flashcards
             case UISwipeGestureRecognizerDirection.left:
                 debug += "left on the "
+                self.flashcardDeck?.nextFC() // advance to the next card
+                updateFlashcardData() // and update the flashcards
             case UISwipeGestureRecognizerDirection.right:
                 debug += "right on the "
+                self.flashcardDeck?.nextFC() // advance to the next card
+                updateFlashcardData() // and update the flashcards
             
             default: print("unknown swipe!")
         }
@@ -175,6 +183,14 @@ class FlashcardDeckViewController: UIViewController {
         }
         
         print(debug)
+    }
+    
+    func updateFlashcardData() {
+        
+        self.flashcardFront?.titleLabel.text = self.flashcardDeck?.getFlashcardAt(position: (self.flashcardDeck?.currentPosition)!).getQuestion()
+        
+        self.flashcardBack?.answerTextView.text = self.flashcardDeck?.getFlashcardAt(position: (self.flashcardDeck?.currentPosition)!).getAnswer()
+        
     }
     
     // MARK: Sample data
