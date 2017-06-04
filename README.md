@@ -9,6 +9,7 @@ to-do:
 -- include swipe tests for flashcard unit tests
 - fix-up icon errors
 - add swipe gesture inside text views of flashcard
+- add a shake gesture to randomize the deck of cards
 - remove magic numbers from FlashcardDeckViewController
 
 helpful links/references/inspiration:
@@ -28,3 +29,5 @@ helpful links/references/inspiration:
 - https://stackoverflow.com/questions/26086175/swift-retrieving-subviews
 - http://www.howtobuildsoftware.com/index.php/how-do/byAz/ios-swift-uiview-uiviewcontroller-uitapgesturerecognizer-flipping-view-in-swift-issues-with-whole-screen-flipping-tap-gesture-only-works-twice
 - https://stackoverflow.com/questions/28938660/how-to-lock-orientation-of-one-view-controller-to-portrait-mode-only-in-swift
+- https://stackoverflow.com/questions/31207783/reloading-a-view-controller-swift
+- https://iosdevcenters.blogspot.com/2017/02/uipangesturerecognizer-tutorial-in.html

@@ -87,6 +87,13 @@ class FlashcardDeckViewController: UIViewController {
         let fcBackTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         flashcardBack?.addGestureRecognizer(fcBackTapGesture)
         
+        // add pan gesture recognizers, for a more "Tinder"-like swipe functionality
+        let fcFrontPanGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+        let fcBackPanGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+        flashcardFront?.addGestureRecognizer(fcFrontPanGesture)
+        flashcardBack?.addGestureRecognizer(fcBackPanGesture)
+        
+        /*
         // add directional swipe gestures to the flashcard, to recognize when to traverse to the next card
         let fcFrontUpSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe))
         let fcFrontDownSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe))
@@ -117,6 +124,7 @@ class FlashcardDeckViewController: UIViewController {
         flashcardBack?.addGestureRecognizer(fcBackDownSwipeGesture)
         flashcardBack?.addGestureRecognizer(fcBackLeftSwipeGesture)
         flashcardBack?.addGestureRecognizer(fcBackRightSwipeGesture)
+         */
     }
     
     func handleTap(sender: UITapGestureRecognizer) {
@@ -148,6 +156,14 @@ class FlashcardDeckViewController: UIViewController {
             // update what flashcard is facing front
             self.isFrontFlashcardFacing = true
         }
+    }
+    
+    func handlePan(sender: UIPanGestureRecognizer) {
+        os_log("you're panning the flashcard", log: OSLog.default, type: .debug)
+        
+        let fcTranslation = sender.translation(in: self.view)
+        self.flashcardView.center = CGPoint(x: self.flashcardView.center.x + fcTranslation.x, y: self.flashcardView.center.y + fcTranslation.y)
+        sender.setTranslation(CGPoint.zero, in: self.flashcardView)
     }
     
     func handleSwipe(sender: UISwipeGestureRecognizer) {
@@ -204,7 +220,11 @@ class FlashcardDeckViewController: UIViewController {
             fatalError("Unable to instantiate fc2")
         }
         
-        self.flashcardDeck = FlashcardDeck(name: "Sample Deck", currentPosition: 0, deck: [fc1, fc2])
+        guard let fc3 = Flashcard(q: "Tell me about a time when you held your ground as a Product Manager", a: "- Gift with Purchase MVP\n- Free-Shipping Threshold\n- Free-Shipping Banner") as? Flashcard else {
+            fatalError("Unable to instantiate fc3")
+        }
+        
+        self.flashcardDeck = FlashcardDeck(name: "Sample Deck", currentPosition: 0, deck: [fc1, fc2, fc3])
         
         os_log("loaded sample flashcards", log: OSLog.default, type: .debug)
     }
