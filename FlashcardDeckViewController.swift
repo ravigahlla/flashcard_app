@@ -20,8 +20,9 @@ class FlashcardDeckViewController: UIViewController {
     private var flashcardBack: FlashcardBack?
     
     private var isFrontFlashcardFacing = true // variable to keep tabs on visible side of flashcard
-    private var fcSwipeSideMargin = 100.0 // the minimum length from side margins before we "swipe" to next card
-    private var fcSwipeTopBottomMargin = 30.0 // the minimum length from top and bottom margins before we "swipe" to the next card
+    
+    private var fcSwipeSideMargin = CGFloat(100.0) // the minimum length from side margins before we "swipe" to next card
+    private var fcSwipeTopBottomMargin = CGFloat(30.0) // the minimum length from top and bottom margins before we "swipe" to the next card
     
     override func viewDidLoad() {
         os_log("in viewDidLoad", log: OSLog.default, type: .debug)
@@ -174,16 +175,52 @@ class FlashcardDeckViewController: UIViewController {
             print("new y = ", fcTranslation.y)
         }*/
         
-        if sender.state == UIGestureRecognizerState.ended {
+        if sender.state == UIGestureRecognizerState.ended { // all the swipe magic here
             
-            // go to next card if your swipe ends outside swipe margins
-            if self.flashcardView.center.x < CGFloat(self.fcSwipeSideMargin) || self.flashcardView.center.x > self.view.frame.width - CGFloat(self.fcSwipeSideMargin) || self.flashcardView.center.y < CGFloat(self.fcSwipeTopBottomMargin) || self.flashcardView.center.y > self.view.frame.height - CGFloat(self.fcSwipeTopBottomMargin) {
-                os_log("next card!")
-            }
+            // go to the next card if your swipe ends outside designated swipe margins
             
-            UIView.animate(withDuration: 0.2, animations: {
-                self.flashcardView.center = self.view.center
+            // if you swipe left...
+            if self.flashcardView.center.x < self.fcSwipeSideMargin {
+                os_log("you swiped left")
+                
+                // animate the previous card off of the screen to the left, at some extreme x position
+                UIView.animate(withDuration: 0.2, animations: {
+                    self.flashcardView.center = CGPoint(x: self.flashcardView.center.x - self.view.frame.width*2, y: self.flashcardView.center.y)
+                })
+                
+            } // else you swipe right
+            else if self.flashcardView.center.x > self.view.frame.width - self.fcSwipeSideMargin {
+                os_log("you swiped right")
+                
+                // animate the previous card off of the screen to the right, at some extreme x position
+                UIView.animate(withDuration: 0.2, animations: {
+                    self.flashcardView.center = CGPoint(x: self.flashcardView.center.x + self.view.frame.width*2, y: self.flashcardView.center.y)
+                })
+            } // else you swipe up
+            else if self.flashcardView.center.y < CGFloat(self.fcSwipeTopBottomMargin) {
+                os_log("you swiped up")
+                
+                // animate the previous card off of the screen to the top, at some extreme y position
+                UIView.animate(withDuration: 0.2, animations: {
+                    self.flashcardView.center = CGPoint(x: self.flashcardView.center.x, y: self.flashcardView.center.y - self.view.frame.height*2)
+                })
+                
+            } // else you swipe down
+            else if self.flashcardView.center.y > self.view.frame.height - CGFloat(self.fcSwipeTopBottomMargin) {
+                os_log("you swiped down")
+                
+                // animate the previous card off of the screen to the top, at some extreme y position
+                UIView.animate(withDuration: 0.2, animations: {
+                    self.flashcardView.center = CGPoint(x: self.flashcardView.center.x, y: self.flashcardView.center.y + self.view.frame.height*2)
+                })
+                
+                // instantiate the next flashcard here
+                
+            } else { // just re-center the flashcard
+                UIView.animate(withDuration: 0.2, animations: {
+                    self.flashcardView.center = self.view.center
             })
+            }
         }
     }
     
