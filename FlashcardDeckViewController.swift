@@ -79,6 +79,37 @@ class FlashcardDeckViewController: UIViewController {
         
         let fcBackTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         flashcardBack?.addGestureRecognizer(fcBackTapGesture)
+        
+        // add directional swipe gestures to the flashcard, to recognize when to traverse to the next card
+        let fcFrontUpSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe))
+        let fcFrontDownSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe))
+        let fcFrontLeftSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe))
+        let fcFrontRightSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe))
+        
+        fcFrontUpSwipeGesture.direction = UISwipeGestureRecognizerDirection.up
+        fcFrontDownSwipeGesture.direction = UISwipeGestureRecognizerDirection.down
+        fcFrontLeftSwipeGesture.direction = UISwipeGestureRecognizerDirection.left
+        fcFrontRightSwipeGesture.direction = UISwipeGestureRecognizerDirection.right
+        
+        flashcardFront?.addGestureRecognizer(fcFrontUpSwipeGesture)
+        flashcardFront?.addGestureRecognizer(fcFrontDownSwipeGesture)
+        flashcardFront?.addGestureRecognizer(fcFrontLeftSwipeGesture)
+        flashcardFront?.addGestureRecognizer(fcFrontRightSwipeGesture)
+        
+        let fcBackUpSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector (handleSwipe))
+        let fcBackDownSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector (handleSwipe))
+        let fcBackLeftSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector (handleSwipe))
+        let fcBackRightSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe))
+        
+        fcBackUpSwipeGesture.direction = UISwipeGestureRecognizerDirection.up
+        fcBackDownSwipeGesture.direction = UISwipeGestureRecognizerDirection.down
+        fcBackLeftSwipeGesture.direction = UISwipeGestureRecognizerDirection.left
+        fcBackRightSwipeGesture.direction = UISwipeGestureRecognizerDirection.right
+        
+        flashcardBack?.addGestureRecognizer(fcBackUpSwipeGesture)
+        flashcardBack?.addGestureRecognizer(fcBackDownSwipeGesture)
+        flashcardBack?.addGestureRecognizer(fcBackLeftSwipeGesture)
+        flashcardBack?.addGestureRecognizer(fcBackRightSwipeGesture)
     }
     
     func handleTap(sender: UITapGestureRecognizer) {
@@ -112,6 +143,33 @@ class FlashcardDeckViewController: UIViewController {
         }
     }
     
+    func handleSwipe(sender: UISwipeGestureRecognizer) {
+        os_log("handle swipe gesture", log: OSLog.default, type: .debug)
+        
+        var debug = "you swiped "
+        
+        switch (sender.direction) {
+            case UISwipeGestureRecognizerDirection.up:
+                debug += "up on the "
+            case UISwipeGestureRecognizerDirection.down:
+                debug += "down on the "
+            case UISwipeGestureRecognizerDirection.left:
+                debug += "left on the "
+            case UISwipeGestureRecognizerDirection.right:
+                debug += "right on the "
+            
+            default: print("unknown swipe!")
+        }
+        
+        if self.isFrontFlashcardFacing {
+            debug += "front flashcard!"
+        } else {
+            debug += "back flashcard!"
+        }
+        
+        print(debug)
+    }
+    
     // MARK: Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         os_log("in prepare", log: OSLog.default, type: .debug)
@@ -125,43 +183,6 @@ class FlashcardDeckViewController: UIViewController {
     
     /*
     var flashcards: FlashcardDeck?
-
-    
-    override func viewDidLoad() {
-        os_log("in viewDidLoad", log: OSLog.default, type: .debug)
-        
-        super.viewDidLoad()
-     
-        // add tap gesture to the front uiview, to recognize when to flip to back
-        let frontFCTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-        
-        flashcardFrontContainerView.addGestureRecognizer(frontFCTapGesture)
-        
-        // add tap gesture to the back uiview, to recognize when to flip to back
-        let backFCTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-        
-        flashcardBackContainerView.addGestureRecognizer(backFCTapGesture)
-        
-        // add swipe gesture to the front uiview, to recognize when to go to the next card
-        let frontFCSwipeRightGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleFrontFCRightSwipe))
-        let frontFCSwipeLeftGesture = UISwipeGestureRecognizer(target: self, action: #selector (handleFrontFCLeftSwipe))
-        frontFCSwipeRightGesture.direction = UISwipeGestureRecognizerDirection.right
-        frontFCSwipeLeftGesture.direction = UISwipeGestureRecognizerDirection.left
-        flashcardFrontContainerView.addGestureRecognizer(frontFCSwipeRightGesture)
-        flashcardFrontContainerView.addGestureRecognizer(frontFCSwipeLeftGesture)
-        
-        // add swipe gesture to the back uiview, to recognize when to go to the next card
-        let backFCSwipeRightGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleBackFCRightSwipe))
-        let backFCSwipeLeftGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleBackFCLeftSwipe))
-        backFCSwipeRightGesture.direction = UISwipeGestureRecognizerDirection.right
-        backFCSwipeLeftGesture.direction = UISwipeGestureRecognizerDirection.left
-        flashcardBackContainerView.addGestureRecognizer(backFCSwipeRightGesture)
-        flashcardBackContainerView.addGestureRecognizer(backFCSwipeLeftGesture)
-        
-        flashcardFrontContainerView.alpha = 1
-        flashcardBackContainerView.alpha = 0
- 
-    }
     
     private func loadSampleFlashcards() {
         
@@ -176,28 +197,6 @@ class FlashcardDeckViewController: UIViewController {
         fcDeck = FlashcardDeck(name: "Sample Deck", currentPosition: 0, deck: [fc1, fc2])
         
         os_log("loaded sample flashcards", log: OSLog.default, type: .debug)
-    }
-    
-    
-    func handleFrontFCRightSwipe() {
-        os_log("swiped right on front", log: OSLog.default, type: .debug)
-    }
-    
-    func handleFrontFCLeftSwipe() {
-        os_log("swiped left on front", log: OSLog.default, type: .debug)
-    }
-    
-    func handleBackFCRightSwipe() {
-        os_log("swiped right on back", log: OSLog.default, type: .debug)
-    }
-    
-    func handleBackFCLeftSwipe() {
-        os_log("swiped left on back", log: OSLog.default, type: .debug)
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     // MARK: - Navigation
