@@ -164,6 +164,13 @@ class FlashcardDeckViewController: UIViewController {
         let fcTranslation = sender.translation(in: self.view)
         self.flashcardView.center = CGPoint(x: self.flashcardView.center.x + fcTranslation.x, y: self.flashcardView.center.y + fcTranslation.y)
         sender.setTranslation(CGPoint.zero, in: self.flashcardView)
+        
+        if sender.state == UIGestureRecognizerState.ended {
+        
+            UIView.animate(withDuration: 0.2, animations: {
+                self.flashcardView.center = self.view.center
+            })
+        }
     }
     
     func handleSwipe(sender: UISwipeGestureRecognizer) {
