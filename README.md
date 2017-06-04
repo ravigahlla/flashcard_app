@@ -32,4 +32,4 @@ helpful links/references/inspiration:
 - https://stackoverflow.com/questions/31207783/reloading-a-view-controller-swift
 - https://iosdevcenters.blogspot.com/2017/02/uipangesturerecognizer-tutorial-in.html
 - https://www.youtube.com/watch?v=0fXR-Ksuqo4 (iOS Tinder-Like Swipe - Part 1- UIPanGestureRecognizer (Xcode 8, Swift 3))
-- 
+- https://www.youtube.com/watch?v=sBnqFLJqn9M (iOS Tinder-Like Swipe - Part 3 - Animating card off screen (Xcode 8, Swift 3))

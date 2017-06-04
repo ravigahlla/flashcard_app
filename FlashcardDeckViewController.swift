@@ -20,6 +20,8 @@ class FlashcardDeckViewController: UIViewController {
     private var flashcardBack: FlashcardBack?
     
     private var isFrontFlashcardFacing = true // variable to keep tabs on visible side of flashcard
+    private var fcSwipeSideMargin = 100.0 // the minimum length from side margins before we "swipe" to next card
+    private var fcSwipeTopBottomMargin = 30.0 // the minimum length from top and bottom margins before we "swipe" to the next card
     
     override func viewDidLoad() {
         os_log("in viewDidLoad", log: OSLog.default, type: .debug)
@@ -159,14 +161,26 @@ class FlashcardDeckViewController: UIViewController {
     }
     
     func handlePan(sender: UIPanGestureRecognizer) {
-        os_log("you're panning the flashcard", log: OSLog.default, type: .debug)
+        //os_log("you're panning the flashcard", log: OSLog.default, type: .debug) // prints too much when panning
         
         let fcTranslation = sender.translation(in: self.view)
         self.flashcardView.center = CGPoint(x: self.flashcardView.center.x + fcTranslation.x, y: self.flashcardView.center.y + fcTranslation.y)
         sender.setTranslation(CGPoint.zero, in: self.flashcardView)
         
-        if sender.state == UIGestureRecognizerState.ended {
+        // debugging
+        /*
+        if sender.state == UIGestureRecognizerState.changed {
+            print("new x = ", fcTranslation.x)
+            print("new y = ", fcTranslation.y)
+        }*/
         
+        if sender.state == UIGestureRecognizerState.ended {
+            
+            // go to next card if your swipe ends outside swipe margins
+            if self.flashcardView.center.x < CGFloat(self.fcSwipeSideMargin) || self.flashcardView.center.x > self.view.frame.width - CGFloat(self.fcSwipeSideMargin) || self.flashcardView.center.y < CGFloat(self.fcSwipeTopBottomMargin) || self.flashcardView.center.y > self.view.frame.height - CGFloat(self.fcSwipeTopBottomMargin) {
+                os_log("next card!")
+            }
+            
             UIView.animate(withDuration: 0.2, animations: {
                 self.flashcardView.center = self.view.center
             })
