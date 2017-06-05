@@ -12,14 +12,14 @@ import os.log
 class FlashcardDeckViewController: UIViewController {
     
     // MARK: Properties
-    var flashcardDeck: FlashcardDeck?
+    var fcDeck: FlashcardDeck?
     
     @IBOutlet weak var flashcardView: UIView! // main view container for a flashcard
     
-    private var flashcardFront: FlashcardFront?
-    private var flashcardBack: FlashcardBack?
+    private var fcFront: FlashcardFront?
+    private var fcBack: FlashcardBack?
     
-    private var isFrontFlashcardFacing = true // variable to keep tabs on visible side of flashcard
+    private var isFront = true // variable to keep tabs on visible side of flashcard
     
     private var fcSwipeSideMargin = CGFloat(100.0) // the minimum length from side margins before we "swipe" to next card
     private var fcSwipeTopBottomMargin = CGFloat(30.0) // the minimum length from top and bottom margins before we "swipe" to the next card
@@ -63,14 +63,14 @@ class FlashcardDeckViewController: UIViewController {
         let flashcardFaceRect = CGRect(x: 0.0, y: 0.0, width: self.flashcardView.frame.width, height: self.flashcardView.frame.height)
         
         // add the front flashcard in the subviews array
-        self.flashcardFront = FlashcardFront(frame: flashcardFaceRect)
-        self.flashcardBack = FlashcardBack(frame: flashcardFaceRect)
+        self.fcFront = FlashcardFront(frame: flashcardFaceRect)
+        self.fcBack = FlashcardBack(frame: flashcardFaceRect)
         
         updateFlashcardData() // load the data from the deck
         
-        self.flashcardView?.addSubview(flashcardFront!)
-        self.flashcardView.addSubview(flashcardBack!)
-        flashcardBack?.isHidden = true
+        self.flashcardView?.addSubview(fcFront!)
+        self.flashcardView.addSubview(fcBack!)
+        fcBack?.isHidden = true
         
         /*
         for subview in self.flashcardView.subviews { // debugging
@@ -80,21 +80,21 @@ class FlashcardDeckViewController: UIViewController {
     
     private func initFlashcardGestures() {
         
-        flashcardFront?.isUserInteractionEnabled = true
-        flashcardBack?.isUserInteractionEnabled = true
+        fcFront?.isUserInteractionEnabled = true
+        fcBack?.isUserInteractionEnabled = true
         
         // add tap gesture to the flashcard, to recognize when to flip to back
         let fcFrontTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-        flashcardFront?.addGestureRecognizer(fcFrontTapGesture)
+        fcFront?.addGestureRecognizer(fcFrontTapGesture)
         
         let fcBackTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-        flashcardBack?.addGestureRecognizer(fcBackTapGesture)
+        fcBack?.addGestureRecognizer(fcBackTapGesture)
         
         // add pan gesture recognizers, for a more "Tinder"-like swipe functionality
         let fcFrontPanGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
         let fcBackPanGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
-        flashcardFront?.addGestureRecognizer(fcFrontPanGesture)
-        flashcardBack?.addGestureRecognizer(fcBackPanGesture)
+        fcFront?.addGestureRecognizer(fcFrontPanGesture)
+        fcBack?.addGestureRecognizer(fcBackPanGesture)
         
         /*
         // add directional swipe gestures to the flashcard, to recognize when to traverse to the next card
@@ -108,10 +108,10 @@ class FlashcardDeckViewController: UIViewController {
         fcFrontLeftSwipeGesture.direction = UISwipeGestureRecognizerDirection.left
         fcFrontRightSwipeGesture.direction = UISwipeGestureRecognizerDirection.right
         
-        flashcardFront?.addGestureRecognizer(fcFrontUpSwipeGesture)
-        flashcardFront?.addGestureRecognizer(fcFrontDownSwipeGesture)
-        flashcardFront?.addGestureRecognizer(fcFrontLeftSwipeGesture)
-        flashcardFront?.addGestureRecognizer(fcFrontRightSwipeGesture)
+        fcFront?.addGestureRecognizer(fcFrontUpSwipeGesture)
+        fcFront?.addGestureRecognizer(fcFrontDownSwipeGesture)
+        fcFront?.addGestureRecognizer(fcFrontLeftSwipeGesture)
+        fcFront?.addGestureRecognizer(fcFrontRightSwipeGesture)
         
         let fcBackUpSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector (handleSwipe))
         let fcBackDownSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector (handleSwipe))
@@ -123,41 +123,41 @@ class FlashcardDeckViewController: UIViewController {
         fcBackLeftSwipeGesture.direction = UISwipeGestureRecognizerDirection.left
         fcBackRightSwipeGesture.direction = UISwipeGestureRecognizerDirection.right
         
-        flashcardBack?.addGestureRecognizer(fcBackUpSwipeGesture)
-        flashcardBack?.addGestureRecognizer(fcBackDownSwipeGesture)
-        flashcardBack?.addGestureRecognizer(fcBackLeftSwipeGesture)
-        flashcardBack?.addGestureRecognizer(fcBackRightSwipeGesture)
+        fcBack?.addGestureRecognizer(fcBackUpSwipeGesture)
+        fcBack?.addGestureRecognizer(fcBackDownSwipeGesture)
+        fcBack?.addGestureRecognizer(fcBackLeftSwipeGesture)
+        fcBack?.addGestureRecognizer(fcBackRightSwipeGesture)
          */
     }
     
     func handleTap(sender: UITapGestureRecognizer) {
         os_log("handle tap gesture", log: OSLog.default, type: .debug)
         
-        if isFrontFlashcardFacing {
+        if isFront {
             print("tapped on front")
             
             // before you flip, hide the subviews
-            self.flashcardFront?.isHidden = true
-            self.flashcardBack?.isHidden = false
+            self.fcFront?.isHidden = true
+            self.fcBack?.isHidden = false
             
             // the bloody flip animation
-            UIView.transition(from: self.flashcardFront!, to: self.flashcardBack!, duration: 0.3, options: .transitionFlipFromRight)
+            UIView.transition(from: self.fcFront!, to: self.fcBack!, duration: 0.3, options: .transitionFlipFromRight)
             
             // update what flashcard is facing front
-            self.isFrontFlashcardFacing = false
+            self.isFront = false
 
         } else {
             print("tapped on back")
             
             // before you flip, hide the subviews
-            self.flashcardFront?.isHidden = false
-            self.flashcardBack?.isHidden = true
+            self.fcFront?.isHidden = false
+            self.fcBack?.isHidden = true
             
             // the bloody flip animation
-            UIView.transition(from: self.flashcardBack!, to: self.flashcardFront!, duration: 0.3, options: .transitionFlipFromRight)
+            UIView.transition(from: self.fcBack!, to: self.fcFront!, duration: 0.3, options: .transitionFlipFromRight)
             
             // update what flashcard is facing front
-            self.isFrontFlashcardFacing = true
+            self.isFront = true
         }
     }
     
@@ -165,6 +165,8 @@ class FlashcardDeckViewController: UIViewController {
         //os_log("you're panning the flashcard", log: OSLog.default, type: .debug) // prints too much when panning
         
         let fcTranslation = sender.translation(in: self.view)
+        
+        // to drag the flashcard around while you pan
         self.flashcardView.center = CGPoint(x: self.flashcardView.center.x + fcTranslation.x, y: self.flashcardView.center.y + fcTranslation.y)
         sender.setTranslation(CGPoint.zero, in: self.flashcardView)
         
@@ -215,6 +217,20 @@ class FlashcardDeckViewController: UIViewController {
                 })
                 
                 // instantiate the next flashcard here
+                self.fcDeck?.nextFC()
+                // remove previous flashcard subviews
+                // instantiate the next flashcard in the middle of the view
+                updateFlashcardData()
+                
+                // if the flashcard deck is greater than 1
+                // display the front-face of the next flashcard behind the current flashcard, drawn slightly above and to the right of the current flashcard (a negative coordinate, to make it look like there is a deck of cards
+                // if the current flashcard has been removed
+                //  advance to the next flashcard in the array of flashcards
+                //  pop-off the previous two subviews (prev front and prev back)
+                //  bring the previous flashcard front and center of main view
+                //  instantiate the back of the flashcard with data, and add as a subview
+                // if there are more flashcards left,
+                //  then display the front face of the next flashcard behind the current flashcard, drawn slightly above and to the right of the current flashcard...
                 
             } else { // just re-center the flashcard
                 UIView.animate(withDuration: 0.2, animations: {
@@ -232,25 +248,25 @@ class FlashcardDeckViewController: UIViewController {
         switch (sender.direction) {
             case UISwipeGestureRecognizerDirection.up:
                 debug += "up on the "
-                self.flashcardDeck?.nextFC() // advance to the next card
+                self.fcDeck?.nextFC() // advance to the next card
                 updateFlashcardData() // and update the flashcards
             case UISwipeGestureRecognizerDirection.down:
                 debug += "down on the "
-                self.flashcardDeck?.nextFC() // advance to the next card
+                self.fcDeck?.nextFC() // advance to the next card
                 updateFlashcardData() // and update the flashcards
             case UISwipeGestureRecognizerDirection.left:
                 debug += "left on the "
-                self.flashcardDeck?.nextFC() // advance to the next card
+                self.fcDeck?.nextFC() // advance to the next card
                 updateFlashcardData() // and update the flashcards
             case UISwipeGestureRecognizerDirection.right:
                 debug += "right on the "
-                self.flashcardDeck?.nextFC() // advance to the next card
+                self.fcDeck?.nextFC() // advance to the next card
                 updateFlashcardData() // and update the flashcards
             
             default: print("unknown swipe!")
         }
         
-        if self.isFrontFlashcardFacing {
+        if self.isFront {
             debug += "front flashcard!"
         } else {
             debug += "back flashcard!"
@@ -261,9 +277,9 @@ class FlashcardDeckViewController: UIViewController {
     
     func updateFlashcardData() {
         
-        self.flashcardFront?.titleLabel.text = self.flashcardDeck?.getFlashcardAt(position: (self.flashcardDeck?.currentPosition)!).getQuestion()
+        self.fcFront?.titleLabel.text = self.fcDeck?.getFlashcardAt(position: (self.fcDeck?.currentPosition)!).getQuestion()
         
-        self.flashcardBack?.answerTextView.text = self.flashcardDeck?.getFlashcardAt(position: (self.flashcardDeck?.currentPosition)!).getAnswer()
+        self.fcBack?.answerTextView.text = self.fcDeck?.getFlashcardAt(position: (self.fcDeck?.currentPosition)!).getAnswer()
         
     }
     
@@ -282,7 +298,7 @@ class FlashcardDeckViewController: UIViewController {
             fatalError("Unable to instantiate fc3")
         }
         
-        self.flashcardDeck = FlashcardDeck(name: "Sample Deck", currentPosition: 0, deck: [fc1, fc2, fc3])
+        self.fcDeck = FlashcardDeck(name: "Sample Deck", currentPosition: 0, deck: [fc1, fc2, fc3])
         
         os_log("loaded sample flashcards", log: OSLog.default, type: .debug)
     }
@@ -314,7 +330,7 @@ class FlashcardDeckViewController: UIViewController {
         
         switch (segue.identifier ?? "") {
             
-            case "flashcardFrontSegue":
+            case "fcFrontSegue":
                 os_log("entered flashcard front segue", log: OSLog.default, type: .debug)
             
                 guard let fcFrontViewController = segue.destination as? FlashcardFrontViewController else {
