@@ -42,9 +42,15 @@ class FlashcardDeckViewController: UIViewController {
         initFlashcardGestures()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        AppDelegate.AppUtility.lockOrientation(.landscape)
+    }
+    
     // MARK: Force a landscape orientation of the flashcard view controller
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         AppDelegate.AppUtility.lockOrientation(.landscape)
     }
     
@@ -68,16 +74,15 @@ class FlashcardDeckViewController: UIViewController {
         self.fcBack = FlashcardBack(frame: flashcardFaceRect)
         
         // debugging
+        /*
         print("flashcard width = ", self.flashcardView.frame.width, "height = ", self.flashcardView.frame.height)
         print("fcFront width = ", self.fcFront?.frame.width, "height = ", self.fcFront?.frame.height)
-        
+        */
         updateFlashcardData() // load the data from the deck
         
         self.flashcardView?.addSubview(fcFront!)
         self.flashcardView.addSubview(fcBack!)
         fcBack?.isHidden = true
-        
-        self.fcFront?.backgroundColor = UIColor.red
         
         /*
         for subview in self.flashcardView.subviews { // debugging
