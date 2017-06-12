@@ -11,7 +11,7 @@ to-do:
 - add swipe gesture inside text views of flashcard
 - add a shake gesture to randomize the deck of cards
 - remove magic numbers from FlashcardDeckViewController
-- there is an EXTREMELY annoying bug that is a blocker: if you view the app as an iphone 7 (even though I have an iphone 7+), then the flashcard view renders OUTSIDE the UIView containing it, causing a horrible clipping and panning situation. This might have something to do with forcing landscape orientation, or it might have something to do with the damn size instantiation of the subview, but the end result is that you cannot display the flashcard correctly for an iPhone 7+!
+- there is a memory leak going on: too many instantiations of the front flashcard are occurring
 
 helpful links/references/inspiration:
 - https://developer.apple.com/library/content/referencelibrary/GettingStarted/DevelopiOSAppsSwift/index.html#//apple_ref/doc/uid/TP40015214-CH2-SW1

@@ -34,12 +34,21 @@ class FlashcardDeckViewController: UIViewController {
         self.flashcardView.layer.borderWidth = 1.0
         self.flashcardView.layer.borderColor = UIColor.black.cgColor
         
-        // load sample data
-        loadSampleFlashcardDeck()
+        // force a landscape orientation
+        let value = UIInterfaceOrientation.landscapeLeft.rawValue
+        UIDevice.current.setValue(value, forKey: "orientation")
+        UIViewController.attemptRotationToDeviceOrientation()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         
         // initialize the flashcard
         initFlashcard()
         initFlashcardGestures()
+        
+        // load sample data
+        loadSampleFlashcardDeck()
     }
     
     override func viewWillAppear(_ animated: Bool) {
