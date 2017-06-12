@@ -4,7 +4,7 @@ iOS 10.3 Mobile-App to represent flashcards
 to-do:
 - fix alignment/auto-layout issues for flashcard front/back/full controller view
 - fix flashcard back textview scrolling limitation (one way to do this is the make the main flashcard a UIView, and then the FrontFlashcard a StackedView, and add it is a subview to the main flashcard, but maxed out in size)
-- is there a way of not instantiating and storing both sides of the flashcard, instantiating when necessary?
+- is there a way of not instantiating and storing both sides of the flashcard, instantiating when necessary? for a little bit of memory efficiency
 - write unit tests for flashcard and flashcards
 -- include swipe tests for flashcard unit tests
 - fix-up icon errors
@@ -33,3 +33,5 @@ helpful links/references/inspiration:
 - https://iosdevcenters.blogspot.com/2017/02/uipangesturerecognizer-tutorial-in.html
 - https://www.youtube.com/watch?v=0fXR-Ksuqo4 (iOS Tinder-Like Swipe - Part 1- UIPanGestureRecognizer (Xcode 8, Swift 3))
 - https://www.youtube.com/watch?v=sBnqFLJqn9M (iOS Tinder-Like Swipe - Part 3 - Animating card off screen (Xcode 8, Swift 3))
+- https://stackoverflow.com/questions/10556120/how-to-get-a-cgpoint-from-a-tapped-location
+- https://www.weheartswift.com/tuples-enums/

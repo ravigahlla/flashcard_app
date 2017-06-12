@@ -21,8 +21,9 @@ class FlashcardDeckViewController: UIViewController {
     
     private var isFront = true // variable to keep tabs on visible side of flashcard
     
-    private var fcSwipeSideMargin = CGFloat(100.0) // the minimum length from side margins before we "swipe" to next card
-    private var fcSwipeTopBottomMargin = CGFloat(30.0) // the minimum length from top and bottom margins before we "swipe" to the next card
+    private var fcPanSideMargin = CGFloat(100.0) // the minimum length from side margins before we "swipe" to next card
+    private var fcPanTopBottomMargin = CGFloat(30.0) // the minimum length from top and bottom margins before we "swipe" to the next card
+    private var panBeginEndPoints = (beganInFC: Bool(), endedInFC: Bool()) // making class variable because values aren't set correctly if local within pan gesture method
     
     override func viewDidLoad() {
         os_log("in viewDidLoad", log: OSLog.default, type: .debug)
@@ -66,11 +67,17 @@ class FlashcardDeckViewController: UIViewController {
         self.fcFront = FlashcardFront(frame: flashcardFaceRect)
         self.fcBack = FlashcardBack(frame: flashcardFaceRect)
         
+        // debugging
+        print("flashcard width = ", self.flashcardView.frame.width, "height = ", self.flashcardView.frame.height)
+        print("fcFront width = ", self.fcFront?.frame.width, "height = ", self.fcFront?.frame.height)
+        
         updateFlashcardData() // load the data from the deck
         
         self.flashcardView?.addSubview(fcFront!)
         self.flashcardView.addSubview(fcBack!)
         fcBack?.isHidden = true
+        
+        self.fcFront?.backgroundColor = UIColor.red
         
         /*
         for subview in self.flashcardView.subviews { // debugging
@@ -80,6 +87,7 @@ class FlashcardDeckViewController: UIViewController {
     
     private func initFlashcardGestures() {
         
+        self.view.isUserInteractionEnabled = true // for bringing back a flashcard
         fcFront?.isUserInteractionEnabled = true
         fcBack?.isUserInteractionEnabled = true
         
@@ -91,10 +99,14 @@ class FlashcardDeckViewController: UIViewController {
         fcBack?.addGestureRecognizer(fcBackTapGesture)
         
         // add pan gesture recognizers, for a more "Tinder"-like swipe functionality
-        let fcFrontPanGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
-        let fcBackPanGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
-        fcFront?.addGestureRecognizer(fcFrontPanGesture)
-        fcBack?.addGestureRecognizer(fcBackPanGesture)
+        //let fcFrontPanGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+        //let fcBackPanGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+        //fcFront?.addGestureRecognizer(fcFrontPanGesture)
+        //fcBack?.addGestureRecognizer(fcBackPanGesture)
+        
+        // add pan gesture recognizer to entire area, to help differentiate between removing current, and adding back previous flashcards
+        let fcBringBackPanGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+        self.view.addGestureRecognizer(fcBringBackPanGesture)
         
         /*
         // add directional swipe gestures to the flashcard, to recognize when to traverse to the next card
@@ -162,84 +174,98 @@ class FlashcardDeckViewController: UIViewController {
     }
     
     func handlePan(sender: UIPanGestureRecognizer) {
-        //os_log("you're panning the flashcard", log: OSLog.default, type: .debug) // prints too much when panning
+        let fcTranslation = sender.translation(in: self.view) // keep track of changing x,y coords
         
-        let fcTranslation = sender.translation(in: self.view)
-        
-        // to drag the flashcard around while you pan
-        self.flashcardView.center = CGPoint(x: self.flashcardView.center.x + fcTranslation.x, y: self.flashcardView.center.y + fcTranslation.y)
-        sender.setTranslation(CGPoint.zero, in: self.flashcardView)
-        
-        // debugging
-        /*
-        if sender.state == UIGestureRecognizerState.changed {
-            print("new x = ", fcTranslation.x)
-            print("new y = ", fcTranslation.y)
-        }*/
-        
-        if sender.state == UIGestureRecognizerState.ended { // all the swipe magic here
+        if sender.state == UIGestureRecognizerState.began {
+            /*
+            // debugging
+            print("began at ", sender.location(in: self.view), " in view")
+            print("began at ", sender.location(in: self.fcFront), " in flashcardView")
+            print("in fcFront? ", self.fcFront?.frame.contains(sender.location(in: self.fcFront)))
+            */
+            panBeginEndPoints.beganInFC = (self.fcFront?.frame.contains(sender.location(in: self.fcFront)))!
+            //print(panBeginEndPoints.beganInFC)
+        } // handle the dragging animation in here
+        else if sender.state == UIGestureRecognizerState.changed {
+            /*
+            // debugging
+            //print("you are still panning")
+            print(panBeginEndPoints.beganInFC)
+            if (panBeginEndPoints.beganInFC) {
+                print("started in flashcard")
+            }
+            else {
+                print ("started outside of flashcard")
+            }
+            */
             
-            // go to the next card if your swipe ends outside designated swipe margins
+            if (((self.fcFront?.frame.contains(sender.location(in: self.fcFront)))! || (self.fcBack?.frame.contains(sender.location(in: self.fcBack)))!) && panBeginEndPoints.beganInFC) {
+                /*
+                // debugging
+                print("in flashcardView? ", self.flashcardView.frame.contains(sender.location(in: self.flashcardView)))
+                print("in fcFront? ", self.fcFront?.frame.contains(sender.location(in: self.fcFront)))
+                */
+                self.flashcardView.center = CGPoint(x: self.flashcardView.center.x + fcTranslation.x, y: self.flashcardView.center.y + fcTranslation.y)
+                sender.setTranslation(CGPoint.zero, in: self.view)
+            }
+            
+        } // all the swipe animation/logic here
+        else if sender.state == UIGestureRecognizerState.ended {
+            /*
+            // debugging
+            print("stopped at ", sender.location(in: self.view), " in view")
+            print("stopped at ", sender.location(in: self.fcFront), " in flashcardView")
+            print("in fcFront? ", self.fcFront?.frame.contains(sender.location(in: self.fcFront)))
+            */
+            panBeginEndPoints.endedInFC = (self.fcFront?.frame.contains(sender.location(in: self.fcFront)))!
             
             // if you swipe left...
-            if self.flashcardView.center.x < self.fcSwipeSideMargin {
+            if self.flashcardView.center.x < self.fcPanSideMargin {
                 os_log("you swiped left")
-                
+                    
                 // animate the previous card off of the screen to the left, at some extreme x position
                 UIView.animate(withDuration: 0.2, animations: {
                     self.flashcardView.center = CGPoint(x: self.flashcardView.center.x - self.view.frame.width*2, y: self.flashcardView.center.y)
                 })
-                
+                    
             } // else you swipe right
-            else if self.flashcardView.center.x > self.view.frame.width - self.fcSwipeSideMargin {
+            else if self.flashcardView.center.x > self.view.frame.width - self.fcPanSideMargin {
                 os_log("you swiped right")
-                
+                    
                 // animate the previous card off of the screen to the right, at some extreme x position
                 UIView.animate(withDuration: 0.2, animations: {
                     self.flashcardView.center = CGPoint(x: self.flashcardView.center.x + self.view.frame.width*2, y: self.flashcardView.center.y)
                 })
             } // else you swipe up
-            else if self.flashcardView.center.y < CGFloat(self.fcSwipeTopBottomMargin) {
+            else if self.flashcardView.center.y < CGFloat(self.fcPanTopBottomMargin) {
                 os_log("you swiped up")
-                
+                    
                 // animate the previous card off of the screen to the top, at some extreme y position
                 UIView.animate(withDuration: 0.2, animations: {
                     self.flashcardView.center = CGPoint(x: self.flashcardView.center.x, y: self.flashcardView.center.y - self.view.frame.height*2)
                 })
-                
+                    
             } // else you swipe down
-            else if self.flashcardView.center.y > self.view.frame.height - CGFloat(self.fcSwipeTopBottomMargin) {
+            else if self.flashcardView.center.y > self.view.frame.height - CGFloat(self.fcPanTopBottomMargin) {
                 os_log("you swiped down")
-                
+                    
                 // animate the previous card off of the screen to the top, at some extreme y position
                 UIView.animate(withDuration: 0.2, animations: {
                     self.flashcardView.center = CGPoint(x: self.flashcardView.center.x, y: self.flashcardView.center.y + self.view.frame.height*2)
                 })
-                
-                // instantiate the next flashcard here
-                self.fcDeck?.nextFC()
-                // remove previous flashcard subviews
-                // instantiate the next flashcard in the middle of the view
-                updateFlashcardData()
-                
-                // if the flashcard deck is greater than 1
-                // display the front-face of the next flashcard behind the current flashcard, drawn slightly above and to the right of the current flashcard (a negative coordinate, to make it look like there is a deck of cards
-                // if the current flashcard has been removed
-                //  advance to the next flashcard in the array of flashcards
-                //  pop-off the previous two subviews (prev front and prev back)
-                //  bring the previous flashcard front and center of main view
-                //  instantiate the back of the flashcard with data, and add as a subview
-                // if there are more flashcards left,
-                //  then display the front face of the next flashcard behind the current flashcard, drawn slightly above and to the right of the current flashcard...
-                
-            } else { // just re-center the flashcard
+                    
+                nextFlashCard()
+                    
+            } // ELSE just redraw the card to the center of the view
+            else {
                 UIView.animate(withDuration: 0.2, animations: {
                     self.flashcardView.center = self.view.center
-            })
+                    })
             }
         }
     }
     
+    /*
     func handleSwipe(sender: UISwipeGestureRecognizer) {
         os_log("handle swipe gesture", log: OSLog.default, type: .debug)
         
@@ -273,6 +299,24 @@ class FlashcardDeckViewController: UIViewController {
         }
         
         print(debug)
+    }*/
+    
+    func nextFlashCard() {
+        // instantiate the next flashcard here
+        self.fcDeck?.nextFC()
+        // remove previous flashcard subviews
+        // instantiate the next flashcard in the middle of the view
+        updateFlashcardData()
+        
+        // if the flashcard deck is greater than 1
+        // display the front-face of the next flashcard behind the current flashcard, drawn slightly above and to the right of the current flashcard (a negative coordinate, to make it look like there is a deck of cards
+        // if the current flashcard has been removed
+        //  advance to the next flashcard in the array of flashcards
+        //  pop-off the previous two subviews (prev front and prev back)
+        //  bring the previous flashcard front and center of main view
+        //  instantiate the back of the flashcard with data, and add as a subview
+        // if there are more flashcards left,
+        //  then display the front face of the next flashcard behind the current flashcard, drawn slightly above and to the right of the current flashcard...
     }
     
     func updateFlashcardData() {
@@ -301,6 +345,36 @@ class FlashcardDeckViewController: UIViewController {
         self.fcDeck = FlashcardDeck(name: "Sample Deck", currentPosition: 0, deck: [fc1, fc2, fc3])
         
         os_log("loaded sample flashcards", log: OSLog.default, type: .debug)
+    }
+    
+    func didPanForPrevFlashcard(begin: CGPoint, end: CGPoint) -> Bool {
+        os_log("in didPanForPrevFlashcard", log: OSLog.default, type: .debug)
+        
+        var result: Bool
+        
+        // if you began panning from outside the flashcard, and ended inside the flashcard
+        if !((self.fcFront?.frame.contains(begin))! || (self.fcBack?.frame.contains(begin))!) && ((self.fcFront?.frame.contains(end))! || (self.fcBack?.frame.contains(end))!) {
+            result = true // you want to bring back the previous flashcard
+        } else {
+            result = false
+        }
+        
+        return result
+    }
+    
+    func didPanToNextFlashcard(begin: CGPoint, end: CGPoint) -> Bool {
+        os_log("in didPanToNextFlashcard", log: OSLog.default, type: .debug)
+        
+        var result: Bool
+        
+        // if you began panning from inside the flashcard, and ended outside the flashcard
+        if ((self.fcFront?.frame.contains(begin))! || (self.fcBack?.frame.contains(begin))!) && !((self.fcFront?.frame.contains(end))! || (self.fcBack?.frame.contains(end))!) {
+            result = true // you want to go to the next flashcard
+        } else {
+            result = false
+        }
+        
+        return result
     }
     
     // MARK: Navigation
