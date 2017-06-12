@@ -2,7 +2,7 @@
 iOS 10.3 Mobile-App to represent flashcards
 
 to-do:
-- fix alignment/auto-layout issues for flashcard front/back/full controller view
+- move fcFront and fcBack constraint and layout code from FlashCardViewController to FlashcardFront views instead?
 - fix flashcard back textview scrolling limitation (one way to do this is the make the main flashcard a UIView, and then the FrontFlashcard a StackedView, and add it is a subview to the main flashcard, but maxed out in size)
 - is there a way of not instantiating and storing both sides of the flashcard, instantiating when necessary? for a little bit of memory efficiency
 - write unit tests for flashcard and flashcards
@@ -11,7 +11,6 @@ to-do:
 - add swipe gesture inside text views of flashcard
 - add a shake gesture to randomize the deck of cards
 - remove magic numbers from FlashcardDeckViewController
-- there is a memory leak going on: too many instantiations of the front flashcard are occurring
 
 helpful links/references/inspiration:
 - https://developer.apple.com/library/content/referencelibrary/GettingStarted/DevelopiOSAppsSwift/index.html#//apple_ref/doc/uid/TP40015214-CH2-SW1
@@ -36,3 +35,5 @@ helpful links/references/inspiration:
 - https://www.youtube.com/watch?v=sBnqFLJqn9M (iOS Tinder-Like Swipe - Part 3 - Animating card off screen (Xcode 8, Swift 3))
 - https://stackoverflow.com/questions/10556120/how-to-get-a-cgpoint-from-a-tapped-location
 - https://www.weheartswift.com/tuples-enums/
+- https://stackoverflow.com/questions/33312153/swift-how-to-get-the-size-of-a-subview-before-it-is-being-displayed#33312785
+- http://demo101.phpcaiji.com/article/cfijjdhf-force-landscape-orientation-swift.html

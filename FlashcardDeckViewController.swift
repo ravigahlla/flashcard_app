@@ -34,26 +34,17 @@ class FlashcardDeckViewController: UIViewController {
         self.flashcardView.layer.borderWidth = 1.0
         self.flashcardView.layer.borderColor = UIColor.black.cgColor
         
-        // force a landscape orientation
-        let value = UIInterfaceOrientation.landscapeLeft.rawValue
-        UIDevice.current.setValue(value, forKey: "orientation")
-        UIViewController.attemptRotationToDeviceOrientation()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+        // load sample data before initializing the flashcards
+        loadSampleFlashcardDeck()
         
         // initialize the flashcard
         initFlashcard()
         initFlashcardGestures()
         
-        // load sample data
-        loadSampleFlashcardDeck()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        AppDelegate.AppUtility.lockOrientation(.landscape)
+        // force a landscape orientation
+        let value = UIInterfaceOrientation.landscapeLeft.rawValue
+        UIDevice.current.setValue(value, forKey: "orientation")
+        UIViewController.attemptRotationToDeviceOrientation()
     }
     
     // MARK: Force a landscape orientation of the flashcard view controller
@@ -65,6 +56,7 @@ class FlashcardDeckViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
         AppDelegate.AppUtility.lockOrientation(.all)
     }
     
@@ -75,12 +67,38 @@ class FlashcardDeckViewController: UIViewController {
     // MARK: Private methods
     private func initFlashcard() {
         
-        // store common superview dimensions
-        let flashcardFaceRect = CGRect(x: 0.0, y: 0.0, width: self.flashcardView.frame.width, height: self.flashcardView.frame.height)
-        
         // add the front flashcard in the subviews array
-        self.fcFront = FlashcardFront(frame: flashcardFaceRect)
-        self.fcBack = FlashcardBack(frame: flashcardFaceRect)
+        self.fcFront = FlashcardFront()
+        self.fcBack = FlashcardBack()
+        
+        self.flashcardView?.addSubview(fcFront!)
+        self.flashcardView.addSubview(fcBack!)
+        
+        self.flashcardView.clipsToBounds = true
+        
+        self.fcFront?.translatesAutoresizingMaskIntoConstraints = false
+        self.fcBack?.translatesAutoresizingMaskIntoConstraints = false
+        
+        // inherit the constraints of the flashcardview
+        self.fcFront?.topAnchor.constraint(equalTo: flashcardView.topAnchor).isActive = true
+        self.fcBack?.topAnchor.constraint(equalTo: flashcardView.topAnchor).isActive = true
+        
+        self.fcFront?.bottomAnchor.constraint(equalTo: flashcardView.bottomAnchor).isActive = true
+        self.fcBack?.bottomAnchor.constraint(equalTo: flashcardView.bottomAnchor).isActive = true
+        
+        self.fcFront?.leftAnchor.constraint(equalTo: flashcardView.leftAnchor).isActive = true
+        self.fcBack?.leftAnchor.constraint(equalTo: flashcardView.leftAnchor).isActive = true
+        
+        self.fcFront?.rightAnchor.constraint(equalTo: flashcardView.rightAnchor).isActive = true
+        self.fcBack?.rightAnchor.constraint(equalTo: flashcardView.rightAnchor).isActive = true
+        
+        self.fcFront?.heightAnchor.constraint(equalTo: flashcardView.heightAnchor).isActive = true
+        self.fcFront?.widthAnchor.constraint(equalTo: flashcardView.widthAnchor).isActive = true
+        
+        self.fcBack?.heightAnchor.constraint(equalTo: flashcardView.heightAnchor).isActive = true
+        self.fcBack?.widthAnchor.constraint(equalTo: flashcardView.widthAnchor).isActive = true
+        
+        fcBack?.isHidden = true
         
         // debugging
         /*
@@ -88,10 +106,6 @@ class FlashcardDeckViewController: UIViewController {
         print("fcFront width = ", self.fcFront?.frame.width, "height = ", self.fcFront?.frame.height)
         */
         updateFlashcardData() // load the data from the deck
-        
-        self.flashcardView?.addSubview(fcFront!)
-        self.flashcardView.addSubview(fcBack!)
-        fcBack?.isHidden = true
         
         /*
         for subview in self.flashcardView.subviews { // debugging
@@ -162,12 +176,8 @@ class FlashcardDeckViewController: UIViewController {
         if isFront {
             print("tapped on front")
             
-            // before you flip, hide the subviews
-            self.fcFront?.isHidden = true
-            self.fcBack?.isHidden = false
-            
             // the bloody flip animation
-            UIView.transition(from: self.fcFront!, to: self.fcBack!, duration: 0.3, options: .transitionFlipFromRight)
+            UIView.transition(from: self.fcFront!, to: self.fcBack!, duration: 0.3, options: [.showHideTransitionViews, .transitionFlipFromRight])
             
             // update what flashcard is facing front
             self.isFront = false
@@ -175,12 +185,8 @@ class FlashcardDeckViewController: UIViewController {
         } else {
             print("tapped on back")
             
-            // before you flip, hide the subviews
-            self.fcFront?.isHidden = false
-            self.fcBack?.isHidden = true
-            
             // the bloody flip animation
-            UIView.transition(from: self.fcBack!, to: self.fcFront!, duration: 0.3, options: .transitionFlipFromRight)
+            UIView.transition(from: self.fcBack!, to: self.fcFront!, duration: 0.3, options: [.showHideTransitionViews, .transitionFlipFromRight])
             
             // update what flashcard is facing front
             self.isFront = true
@@ -197,7 +203,12 @@ class FlashcardDeckViewController: UIViewController {
             print("began at ", sender.location(in: self.fcFront), " in flashcardView")
             print("in fcFront? ", self.fcFront?.frame.contains(sender.location(in: self.fcFront)))
             */
-            panBeginEndPoints.beganInFC = (self.fcFront?.frame.contains(sender.location(in: self.fcFront)))!
+            if (self.isFront) {
+                panBeginEndPoints.beganInFC = (self.fcFront?.frame.contains(sender.location(in: self.fcFront)))!
+            } else {
+                panBeginEndPoints.beganInFC = (self.fcBack?.frame.contains(sender.location(in: self.fcBack)))!
+            }
+            
             //print(panBeginEndPoints.beganInFC)
         } // handle the dragging animation in here
         else if sender.state == UIGestureRecognizerState.changed {
@@ -213,14 +224,26 @@ class FlashcardDeckViewController: UIViewController {
             }
             */
             
-            if (((self.fcFront?.frame.contains(sender.location(in: self.fcFront)))! || (self.fcBack?.frame.contains(sender.location(in: self.fcBack)))!) && panBeginEndPoints.beganInFC) {
-                /*
-                // debugging
-                print("in flashcardView? ", self.flashcardView.frame.contains(sender.location(in: self.flashcardView)))
-                print("in fcFront? ", self.fcFront?.frame.contains(sender.location(in: self.fcFront)))
-                */
-                self.flashcardView.center = CGPoint(x: self.flashcardView.center.x + fcTranslation.x, y: self.flashcardView.center.y + fcTranslation.y)
-                sender.setTranslation(CGPoint.zero, in: self.view)
+            if (self.isFront) {
+                if (((self.fcFront?.frame.contains(sender.location(in: self.fcFront))))! && panBeginEndPoints.beganInFC) {
+                    /*
+                     // debugging
+                     print("in flashcardView? ", self.flashcardView.frame.contains(sender.location(in: self.flashcardView)))
+                     print("in fcFront? ", self.fcFront?.frame.contains(sender.location(in: self.fcFront)))
+                     */
+                    self.flashcardView.center = CGPoint(x: self.flashcardView.center.x + fcTranslation.x, y: self.flashcardView.center.y + fcTranslation.y)
+                    sender.setTranslation(CGPoint.zero, in: self.view)
+                }
+            } else {
+                if (((self.fcBack?.frame.contains(sender.location(in: self.fcBack))))! && panBeginEndPoints.beganInFC) {
+                    /*
+                     // debugging
+                     print("in flashcardView? ", self.flashcardView.frame.contains(sender.location(in: self.flashcardView)))
+                     print("in fcFront? ", self.fcFront?.frame.contains(sender.location(in: self.fcFront)))
+                     */
+                    self.flashcardView.center = CGPoint(x: self.flashcardView.center.x + fcTranslation.x, y: self.flashcardView.center.y + fcTranslation.y)
+                    sender.setTranslation(CGPoint.zero, in: self.view)
+                }
             }
             
         } // all the swipe animation/logic here
@@ -231,7 +254,11 @@ class FlashcardDeckViewController: UIViewController {
             print("stopped at ", sender.location(in: self.fcFront), " in flashcardView")
             print("in fcFront? ", self.fcFront?.frame.contains(sender.location(in: self.fcFront)))
             */
-            panBeginEndPoints.endedInFC = (self.fcFront?.frame.contains(sender.location(in: self.fcFront)))!
+            if (self.isFront) {
+                panBeginEndPoints.endedInFC = (self.fcFront?.frame.contains(sender.location(in: self.fcFront)))!
+            } else {
+                panBeginEndPoints.endedInFC = (self.fcBack?.frame.contains(sender.location(in: self.fcBack)))!
+            }
             
             // if you swipe left...
             if self.flashcardView.center.x < self.fcPanSideMargin {
