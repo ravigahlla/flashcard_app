@@ -42,7 +42,7 @@ class FlashcardDeckViewController: UIViewController {
         initFlashcardGestures()
         
         // force a landscape orientation
-        let value = UIInterfaceOrientation.landscapeLeft.rawValue
+        let value = UIInterfaceOrientation.landscapeRight.rawValue
         UIDevice.current.setValue(value, forKey: "orientation")
         UIViewController.attemptRotationToDeviceOrientation()
     }
@@ -260,48 +260,63 @@ class FlashcardDeckViewController: UIViewController {
                 panBeginEndPoints.endedInFC = (self.fcBack?.frame.contains(sender.location(in: self.fcBack)))!
             }
             
-            // if you swipe left...
-            if self.flashcardView.center.x < self.fcPanSideMargin {
-                os_log("you swiped left")
+            // if you want to move on to the next card
+            if panBeginEndPoints.beganInFC
+            { // you want to take the current card out
+                // if you swipe left...
+                if self.flashcardView.center.x < self.fcPanSideMargin {
+                    os_log("you swiped left")
                     
-                // animate the previous card off of the screen to the left, at some extreme x position
-                UIView.animate(withDuration: 0.2, animations: {
-                    self.flashcardView.center = CGPoint(x: self.flashcardView.center.x - self.view.frame.width*2, y: self.flashcardView.center.y)
-                })
+                    // animate the previous card off of the screen to the left, at some extreme x position
+                    UIView.animate(withDuration: 0.2, animations: {
+                        self.flashcardView.center = CGPoint(x: self.flashcardView.center.x - self.view.frame.width*2, y: self.flashcardView.center.y)
+                    })
                     
-            } // else you swipe right
-            else if self.flashcardView.center.x > self.view.frame.width - self.fcPanSideMargin {
-                os_log("you swiped right")
+                    nextFlashCard()
                     
-                // animate the previous card off of the screen to the right, at some extreme x position
-                UIView.animate(withDuration: 0.2, animations: {
-                    self.flashcardView.center = CGPoint(x: self.flashcardView.center.x + self.view.frame.width*2, y: self.flashcardView.center.y)
-                })
-            } // else you swipe up
-            else if self.flashcardView.center.y < CGFloat(self.fcPanTopBottomMargin) {
-                os_log("you swiped up")
+                } // else you swipe right
+                else if self.flashcardView.center.x > self.view.frame.width - self.fcPanSideMargin {
+                    os_log("you swiped right")
                     
-                // animate the previous card off of the screen to the top, at some extreme y position
-                UIView.animate(withDuration: 0.2, animations: {
-                    self.flashcardView.center = CGPoint(x: self.flashcardView.center.x, y: self.flashcardView.center.y - self.view.frame.height*2)
-                })
+                    // animate the previous card off of the screen to the right, at some extreme x position
+                    UIView.animate(withDuration: 0.2, animations: {
+                        self.flashcardView.center = CGPoint(x: self.flashcardView.center.x + self.view.frame.width*2, y: self.flashcardView.center.y)
+                    })
                     
-            } // else you swipe down
-            else if self.flashcardView.center.y > self.view.frame.height - CGFloat(self.fcPanTopBottomMargin) {
-                os_log("you swiped down")
+                    nextFlashCard()
                     
-                // animate the previous card off of the screen to the top, at some extreme y position
-                UIView.animate(withDuration: 0.2, animations: {
-                    self.flashcardView.center = CGPoint(x: self.flashcardView.center.x, y: self.flashcardView.center.y + self.view.frame.height*2)
-                })
+                } // else you swipe up
+                else if self.flashcardView.center.y < CGFloat(self.fcPanTopBottomMargin) {
+                    os_log("you swiped up")
                     
-                nextFlashCard()
+                    // animate the previous card off of the screen to the top, at some extreme y position
+                    UIView.animate(withDuration: 0.2, animations: {
+                        self.flashcardView.center = CGPoint(x: self.flashcardView.center.x, y: self.flashcardView.center.y - self.view.frame.height*2)
+                    })
                     
-            } // ELSE just redraw the card to the center of the view
-            else {
+                    nextFlashCard()
+                    
+                } // else you swipe down
+                else if self.flashcardView.center.y > self.view.frame.height - CGFloat(self.fcPanTopBottomMargin) {
+                    os_log("you swiped down")
+                    
+                    // animate the previous card off of the screen to the top, at some extreme y position
+                    UIView.animate(withDuration: 0.2, animations: {
+                        self.flashcardView.center = CGPoint(x: self.flashcardView.center.x, y: self.flashcardView.center.y + self.view.frame.height*2)
+                    })
+                    
+                    nextFlashCard()
+                    
+                } // ELSE just redraw the card to the center of the view
+                else {
+                    UIView.animate(withDuration: 0.2, animations: {
+                        self.flashcardView.center = self.view.center
+                    })
+                }
+            } else if !panBeginEndPoints.beganInFC /*&& panBeginEndPoints.endedInFC*/ { // you want to bring the previous card back into the deck
                 UIView.animate(withDuration: 0.2, animations: {
                     self.flashcardView.center = self.view.center
-                    })
+                })
             }
         }
     }
