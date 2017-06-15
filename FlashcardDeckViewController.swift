@@ -386,15 +386,15 @@ class FlashcardDeckViewController: UIViewController {
     // MARK: Sample data
     private func loadSampleFlashcardDeck() {
         
-        guard let fc1 = Flashcard(q: "What is 2+2?", a: "4") as? Flashcard else {
+        guard let fc1 = Flashcard(q: "What is 2+2?", a: "4") else {
             fatalError("Unable to instantiate fc1")
         }
         
-        guard let fc2 = Flashcard(q: "How do you say \"dream\" in Spanish?", a: "Sueño") as? Flashcard else {
+        guard let fc2 = Flashcard(q: "How do you say \"dream\" in Spanish?", a: "Sueño") else {
             fatalError("Unable to instantiate fc2")
         }
         
-        guard let fc3 = Flashcard(q: "Tell me about a time when you held your ground as a Product Manager", a: "- Gift with Purchase MVP\n- Free-Shipping Threshold\n- Free-Shipping Banner") as? Flashcard else {
+        guard let fc3 = Flashcard(q: "Tell me about a time when you held your ground as a Product Manager", a: "- Gift with Purchase MVP\n- Free-Shipping Threshold\n- Free-Shipping Banner") else {
             fatalError("Unable to instantiate fc3")
         }
         

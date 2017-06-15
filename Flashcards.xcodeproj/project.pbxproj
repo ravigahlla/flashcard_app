@@ -17,7 +17,6 @@
 		B360DE341EDCF95B0009CB39 /* FlashcardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B360DE331EDCF95B0009CB39 /* FlashcardTests.swift */; };
 		B38A2E501ECA138B00D1EAAB /* Flashcard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38A2E4F1ECA138B00D1EAAB /* Flashcard.swift */; };
 		B3A39B301ED0ABC5004179E1 /* FlashcardDeckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A39B2F1ED0ABC5004179E1 /* FlashcardDeckViewController.swift */; };
-		B3A39B321ED3C494004179E1 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = B3A39B311ED3C494004179E1 /* README.md */; };
 		B3A39B341ED3CAC3004179E1 /* FlashcardDeck.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A39B331ED3CAC3004179E1 /* FlashcardDeck.swift */; };
 /* End PBXBuildFile section */
 
@@ -220,7 +219,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B360DE2E1ED7D45D0009CB39 /* FlashcardFront.swift in Sources */,
-				B3A39B321ED3C494004179E1 /* README.md in Sources */,
 				B3A39B341ED3CAC3004179E1 /* FlashcardDeck.swift in Sources */,
 				B3A39B301ED0ABC5004179E1 /* FlashcardDeckViewController.swift in Sources */,
 				B360DE301EDCA4B80009CB39 /* FlashcardBack.swift in Sources */,
