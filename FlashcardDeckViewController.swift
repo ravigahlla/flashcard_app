@@ -16,8 +16,7 @@ class FlashcardDeckViewController: UIViewController {
     
     @IBOutlet weak var flashcardView: UIView! // main view container for a flashcard
     
-    private var fcFront: FlashcardFront?
-    private var fcBack: FlashcardBack?
+    private var currentFlashcard = (front: FlashcardFront(), back: FlashcardBack())
     
     private var isFront = true // variable to keep tabs on visible side of flashcard
     
@@ -68,42 +67,39 @@ class FlashcardDeckViewController: UIViewController {
     private func initFlashcard() {
         
         // add the front flashcard in the subviews array
-        self.fcFront = FlashcardFront()
-        self.fcBack = FlashcardBack()
-        
-        self.flashcardView?.addSubview(fcFront!)
-        self.flashcardView.addSubview(fcBack!)
+        self.flashcardView?.addSubview(self.currentFlashcard.front)
+        self.flashcardView?.addSubview(self.currentFlashcard.back)
         
         self.flashcardView.clipsToBounds = true
         
-        self.fcFront?.translatesAutoresizingMaskIntoConstraints = false
-        self.fcBack?.translatesAutoresizingMaskIntoConstraints = false
+        self.currentFlashcard.front.translatesAutoresizingMaskIntoConstraints = false
+        self.currentFlashcard.back.translatesAutoresizingMaskIntoConstraints = false
         
         // inherit the constraints of the flashcardview
-        self.fcFront?.topAnchor.constraint(equalTo: flashcardView.topAnchor).isActive = true
-        self.fcBack?.topAnchor.constraint(equalTo: flashcardView.topAnchor).isActive = true
+        self.currentFlashcard.front.topAnchor.constraint(equalTo: flashcardView.topAnchor).isActive = true
+        self.currentFlashcard.back.topAnchor.constraint(equalTo: flashcardView.topAnchor).isActive = true
         
-        self.fcFront?.bottomAnchor.constraint(equalTo: flashcardView.bottomAnchor).isActive = true
-        self.fcBack?.bottomAnchor.constraint(equalTo: flashcardView.bottomAnchor).isActive = true
+        self.currentFlashcard.front.bottomAnchor.constraint(equalTo: flashcardView.bottomAnchor).isActive = true
+        self.currentFlashcard.back.bottomAnchor.constraint(equalTo: flashcardView.bottomAnchor).isActive = true
         
-        self.fcFront?.leftAnchor.constraint(equalTo: flashcardView.leftAnchor).isActive = true
-        self.fcBack?.leftAnchor.constraint(equalTo: flashcardView.leftAnchor).isActive = true
+        self.currentFlashcard.front.leftAnchor.constraint(equalTo: flashcardView.leftAnchor).isActive = true
+        self.currentFlashcard.back.leftAnchor.constraint(equalTo: flashcardView.leftAnchor).isActive = true
         
-        self.fcFront?.rightAnchor.constraint(equalTo: flashcardView.rightAnchor).isActive = true
-        self.fcBack?.rightAnchor.constraint(equalTo: flashcardView.rightAnchor).isActive = true
+        self.currentFlashcard.front.rightAnchor.constraint(equalTo: flashcardView.rightAnchor).isActive = true
+        self.currentFlashcard.back.rightAnchor.constraint(equalTo: flashcardView.rightAnchor).isActive = true
         
-        self.fcFront?.heightAnchor.constraint(equalTo: flashcardView.heightAnchor).isActive = true
-        self.fcFront?.widthAnchor.constraint(equalTo: flashcardView.widthAnchor).isActive = true
+        self.currentFlashcard.front.heightAnchor.constraint(equalTo: flashcardView.heightAnchor).isActive = true
+        self.currentFlashcard.back.widthAnchor.constraint(equalTo: flashcardView.widthAnchor).isActive = true
         
-        self.fcBack?.heightAnchor.constraint(equalTo: flashcardView.heightAnchor).isActive = true
-        self.fcBack?.widthAnchor.constraint(equalTo: flashcardView.widthAnchor).isActive = true
+        self.currentFlashcard.back.heightAnchor.constraint(equalTo: flashcardView.heightAnchor).isActive = true
+        self.currentFlashcard.back.widthAnchor.constraint(equalTo: flashcardView.widthAnchor).isActive = true
         
-        fcBack?.isHidden = true
+        self.currentFlashcard.back.isHidden = true
         
         // debugging
         /*
         print("flashcard width = ", self.flashcardView.frame.width, "height = ", self.flashcardView.frame.height)
-        print("fcFront width = ", self.fcFront?.frame.width, "height = ", self.fcFront?.frame.height)
+        print("self.currentFlashcard.front width = ", self.currentFlashcard.front.frame.width, "height = ", self.currentFlashcard.front.frame.height)
         */
         updateFlashcardData() // load the data from the deck
         
@@ -116,21 +112,21 @@ class FlashcardDeckViewController: UIViewController {
     private func initFlashcardGestures() {
         
         self.view.isUserInteractionEnabled = true // for bringing back a flashcard
-        fcFront?.isUserInteractionEnabled = true
-        fcBack?.isUserInteractionEnabled = true
+        self.currentFlashcard.front.isUserInteractionEnabled = true
+        self.currentFlashcard.back.isUserInteractionEnabled = true
         
         // add tap gesture to the flashcard, to recognize when to flip to back
         let fcFrontTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-        fcFront?.addGestureRecognizer(fcFrontTapGesture)
+        self.currentFlashcard.front.addGestureRecognizer(fcFrontTapGesture)
         
         let fcBackTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-        fcBack?.addGestureRecognizer(fcBackTapGesture)
+        self.currentFlashcard.back.addGestureRecognizer(fcBackTapGesture)
         
         // add pan gesture recognizers, for a more "Tinder"-like swipe functionality
         //let fcFrontPanGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
         //let fcBackPanGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
-        //fcFront?.addGestureRecognizer(fcFrontPanGesture)
-        //fcBack?.addGestureRecognizer(fcBackPanGesture)
+        //self.currentFlashcard.front.addGestureRecognizer(fcFrontPanGesture)
+        //self.currentFlashcard.back.addGestureRecognizer(fcBackPanGesture)
         
         // add pan gesture recognizer to entire area, to help differentiate between removing current, and adding back previous flashcards
         let fcBringBackPanGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
@@ -148,10 +144,10 @@ class FlashcardDeckViewController: UIViewController {
         fcFrontLeftSwipeGesture.direction = UISwipeGestureRecognizerDirection.left
         fcFrontRightSwipeGesture.direction = UISwipeGestureRecognizerDirection.right
         
-        fcFront?.addGestureRecognizer(fcFrontUpSwipeGesture)
-        fcFront?.addGestureRecognizer(fcFrontDownSwipeGesture)
-        fcFront?.addGestureRecognizer(fcFrontLeftSwipeGesture)
-        fcFront?.addGestureRecognizer(fcFrontRightSwipeGesture)
+        self.currentFlashcard.front.addGestureRecognizer(fcFrontUpSwipeGesture)
+        self.currentFlashcard.front.addGestureRecognizer(fcFrontDownSwipeGesture)
+        self.currentFlashcard.front.addGestureRecognizer(fcFrontLeftSwipeGesture)
+        self.currentFlashcard.front.addGestureRecognizer(fcFrontRightSwipeGesture)
         
         let fcBackUpSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector (handleSwipe))
         let fcBackDownSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector (handleSwipe))
@@ -163,10 +159,10 @@ class FlashcardDeckViewController: UIViewController {
         fcBackLeftSwipeGesture.direction = UISwipeGestureRecognizerDirection.left
         fcBackRightSwipeGesture.direction = UISwipeGestureRecognizerDirection.right
         
-        fcBack?.addGestureRecognizer(fcBackUpSwipeGesture)
-        fcBack?.addGestureRecognizer(fcBackDownSwipeGesture)
-        fcBack?.addGestureRecognizer(fcBackLeftSwipeGesture)
-        fcBack?.addGestureRecognizer(fcBackRightSwipeGesture)
+        self.currentFlashcard.back.addGestureRecognizer(fcBackUpSwipeGesture)
+        self.currentFlashcard.back.addGestureRecognizer(fcBackDownSwipeGesture)
+        self.currentFlashcard.back.addGestureRecognizer(fcBackLeftSwipeGesture)
+        self.currentFlashcard.back.addGestureRecognizer(fcBackRightSwipeGesture)
          */
     }
     
@@ -177,7 +173,7 @@ class FlashcardDeckViewController: UIViewController {
             print("tapped on front")
             
             // the bloody flip animation
-            UIView.transition(from: self.fcFront!, to: self.fcBack!, duration: 0.3, options: [.showHideTransitionViews, .transitionFlipFromRight])
+            UIView.transition(from: self.currentFlashcard.front, to: self.currentFlashcard.back, duration: 0.3, options: [.showHideTransitionViews, .transitionFlipFromRight])
             
             // update what flashcard is facing front
             self.isFront = false
@@ -186,7 +182,7 @@ class FlashcardDeckViewController: UIViewController {
             print("tapped on back")
             
             // the bloody flip animation
-            UIView.transition(from: self.fcBack!, to: self.fcFront!, duration: 0.3, options: [.showHideTransitionViews, .transitionFlipFromRight])
+            UIView.transition(from: self.currentFlashcard.back, to: self.currentFlashcard.front, duration: 0.3, options: [.showHideTransitionViews, .transitionFlipFromRight])
             
             // update what flashcard is facing front
             self.isFront = true
@@ -200,13 +196,13 @@ class FlashcardDeckViewController: UIViewController {
             /*
             // debugging
             print("began at ", sender.location(in: self.view), " in view")
-            print("began at ", sender.location(in: self.fcFront), " in flashcardView")
-            print("in fcFront? ", self.fcFront?.frame.contains(sender.location(in: self.fcFront)))
+            print("began at ", sender.location(in: self.currentFlashcard.front), " in flashcardView")
+            print("in self.currentFlashcard.front? ", self.currentFlashcard.front.frame.contains(sender.location(in: self.currentFlashcard.front)))
             */
             if (self.isFront) {
-                panBeginEndPoints.beganInFC = (self.fcFront?.frame.contains(sender.location(in: self.fcFront)))!
+                panBeginEndPoints.beganInFC = (self.currentFlashcard.front.frame.contains(sender.location(in: self.currentFlashcard.front)))
             } else {
-                panBeginEndPoints.beganInFC = (self.fcBack?.frame.contains(sender.location(in: self.fcBack)))!
+                panBeginEndPoints.beganInFC = (self.currentFlashcard.back.frame.contains(sender.location(in: self.currentFlashcard.back)))
             }
             
             //print(panBeginEndPoints.beganInFC)
@@ -225,21 +221,21 @@ class FlashcardDeckViewController: UIViewController {
             */
             
             if (self.isFront) {
-                if (((self.fcFront?.frame.contains(sender.location(in: self.fcFront))))! && panBeginEndPoints.beganInFC) {
+                if (((self.currentFlashcard.front.frame.contains(sender.location(in: self.currentFlashcard.front)))) && panBeginEndPoints.beganInFC) {
                     /*
                      // debugging
                      print("in flashcardView? ", self.flashcardView.frame.contains(sender.location(in: self.flashcardView)))
-                     print("in fcFront? ", self.fcFront?.frame.contains(sender.location(in: self.fcFront)))
+                     print("in self.currentFlashcard.front ", self.currentFlashcard.front.frame.contains(sender.location(in: self.currentFlashcard.front)))
                      */
                     self.flashcardView.center = CGPoint(x: self.flashcardView.center.x + fcTranslation.x, y: self.flashcardView.center.y + fcTranslation.y)
                     sender.setTranslation(CGPoint.zero, in: self.view)
                 }
             } else {
-                if (((self.fcBack?.frame.contains(sender.location(in: self.fcBack))))! && panBeginEndPoints.beganInFC) {
+                if (((self.currentFlashcard.back.frame.contains(sender.location(in: self.currentFlashcard.back)))) && panBeginEndPoints.beganInFC) {
                     /*
                      // debugging
                      print("in flashcardView? ", self.flashcardView.frame.contains(sender.location(in: self.flashcardView)))
-                     print("in fcFront? ", self.fcFront?.frame.contains(sender.location(in: self.fcFront)))
+                     print("in self.currentFlashcard.front? ", self.currentFlashcard.front.frame.contains(sender.location(in: self.currentFlashcard.front)))
                      */
                     self.flashcardView.center = CGPoint(x: self.flashcardView.center.x + fcTranslation.x, y: self.flashcardView.center.y + fcTranslation.y)
                     sender.setTranslation(CGPoint.zero, in: self.view)
@@ -251,13 +247,13 @@ class FlashcardDeckViewController: UIViewController {
             /*
             // debugging
             print("stopped at ", sender.location(in: self.view), " in view")
-            print("stopped at ", sender.location(in: self.fcFront), " in flashcardView")
-            print("in fcFront? ", self.fcFront?.frame.contains(sender.location(in: self.fcFront)))
+            print("stopped at ", sender.location(in: self.currentFlashcard.front), " in flashcardView")
+            print("in self.currentFlashcard.front? ", self.currentFlashcard.front.frame.contains(sender.location(in: self.currentFlashcard.front)))
             */
             if (self.isFront) {
-                panBeginEndPoints.endedInFC = (self.fcFront?.frame.contains(sender.location(in: self.fcFront)))!
+                panBeginEndPoints.endedInFC = (self.currentFlashcard.front.frame.contains(sender.location(in: self.currentFlashcard.front)))
             } else {
-                panBeginEndPoints.endedInFC = (self.fcBack?.frame.contains(sender.location(in: self.fcBack)))!
+                panBeginEndPoints.endedInFC = (self.currentFlashcard.back.frame.contains(sender.location(in: self.currentFlashcard.back)))
             }
             
             // if you want to move on to the next card
@@ -377,24 +373,24 @@ class FlashcardDeckViewController: UIViewController {
     
     func updateFlashcardData() {
         
-        self.fcFront?.titleLabel.text = self.fcDeck?.getFlashcardAt(position: (self.fcDeck?.currentPosition)!).getQuestion()
+        self.currentFlashcard.front.titleLabel.text = self.fcDeck?.getFlashcardAt(position: (self.fcDeck?.currentPosition)!).getQuestion()
         
-        self.fcBack?.answerTextView.text = self.fcDeck?.getFlashcardAt(position: (self.fcDeck?.currentPosition)!).getAnswer()
+        self.currentFlashcard.back.answerTextView.text = self.fcDeck?.getFlashcardAt(position: (self.fcDeck?.currentPosition)!).getAnswer()
         
     }
     
     // MARK: Sample data
     private func loadSampleFlashcardDeck() {
         
-        guard let fc1 = Flashcard(q: "What is 2+2?", a: "4") else {
+        guard let fc1 = Flashcard(q: "What is 2+2?", a: "4") as? Flashcard else {
             fatalError("Unable to instantiate fc1")
         }
         
-        guard let fc2 = Flashcard(q: "How do you say \"dream\" in Spanish?", a: "Sueño") else {
+        guard let fc2 = Flashcard(q: "How do you say \"dream\" in Spanish?", a: "Sueño") as? Flashcard else {
             fatalError("Unable to instantiate fc2")
         }
         
-        guard let fc3 = Flashcard(q: "Tell me about a time when you held your ground as a Product Manager", a: "- Gift with Purchase MVP\n- Free-Shipping Threshold\n- Free-Shipping Banner") else {
+        guard let fc3 = Flashcard(q: "Tell me about a time when you held your ground as a Product Manager", a: "- Gift with Purchase MVP\n- Free-Shipping Threshold\n- Free-Shipping Banner") as? Flashcard else {
             fatalError("Unable to instantiate fc3")
         }
         
@@ -409,7 +405,7 @@ class FlashcardDeckViewController: UIViewController {
         var result: Bool
         
         // if you began panning from outside the flashcard, and ended inside the flashcard
-        if !((self.fcFront?.frame.contains(begin))! || (self.fcBack?.frame.contains(begin))!) && ((self.fcFront?.frame.contains(end))! || (self.fcBack?.frame.contains(end))!) {
+        if !((self.currentFlashcard.front.frame.contains(begin)) || (self.currentFlashcard.back.frame.contains(begin))) && ((self.currentFlashcard.front.frame.contains(end)) || (self.currentFlashcard.back.frame.contains(end))) {
             result = true // you want to bring back the previous flashcard
         } else {
             result = false
@@ -424,7 +420,7 @@ class FlashcardDeckViewController: UIViewController {
         var result: Bool
         
         // if you began panning from inside the flashcard, and ended outside the flashcard
-        if ((self.fcFront?.frame.contains(begin))! || (self.fcBack?.frame.contains(begin))!) && !((self.fcFront?.frame.contains(end))! || (self.fcBack?.frame.contains(end))!) {
+        if ((self.currentFlashcard.front.frame.contains(begin)) || (self.currentFlashcard.back.frame.contains(begin))) && !((self.currentFlashcard.front.frame.contains(end)) || (self.currentFlashcard.back.frame.contains(end))) {
             result = true // you want to go to the next flashcard
         } else {
             result = false
